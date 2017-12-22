@@ -36,6 +36,7 @@
                             <img class="media-object img-thumbnail main-img" src="<s:property value="#item.itemImg"/> ">
                         </a>
                     </div>
+                    
                     <div class="media-body">
                         <h4 class="media-heading"><s:property value="#item.itemName"/></h4>
                         <h5>
