@@ -5,23 +5,23 @@
 }
 
 #main-container .col-xs-2{
-    padding-left:   0px;
-    padding-right:  0px;
+    padding-left:   0;
+    padding-right:  0;
     font-size:      15px
 }
 
 #main-container .col-xs-2 div a{
-    border: 0px;
+    border: 0;
 }
 
 #main-container .col-xs-7{
-    padding-right:  0px;
-    padding-left:   0px;
+    padding-right:  0;
+    padding-left:   0;
 }
 
 #main-container .col-xs-3{
     padding-left:5px;
-    padding-right:0px;
+    padding-right:0;
     padding-bottom:80px;
     background-color:#fff;
 }
@@ -55,7 +55,7 @@
 }
 
 #myNavBar{
-    margin-bottom:0px;
+    margin-bottom:0;
 }
 
 
@@ -101,18 +101,18 @@
 
 
 #main-manage .col-xs-2{
-    padding-left:   0px;
-    padding-right:  0px;
+    padding-left:   0;
+    padding-right:  0;
     height:         80%;
     font-size:      15px
 }
 
 #main-manage .col-xs-10{
-    padding-right:  0px;
+    padding-right:  0;
 }
 
 #main-manage .col-xs-2 div a{
-    border: 0px;
+    border: 0;
 }
 
 #main-manage .items{
@@ -122,6 +122,17 @@
 
 #main-manage .items:hover{
     background-color: #f7ecb5;
+}
+
+#main-manage .main-img{
+    width: 63px;
+    !important;
+}
+
+#main-manage .col-xs-9{
+    margin-left: 20px;
+    padding: 10px 30px 30px 30px;
+    background-color: #FFFFFF;
 }
 
 

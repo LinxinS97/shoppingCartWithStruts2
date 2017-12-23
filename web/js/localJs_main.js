@@ -1,18 +1,17 @@
 $(document).ready(function(){
-    var $Img = $(".main-img");
-    var maxSize = 62;
+    let $Img = $(".main-img");
+    let maxSize = 71;
+    let maxWidth = 66.5;
     $Img.each(function(){
-        var $this = $(this);
+        let $this = $(this);
         if($this.height() > maxSize){
-
-            var precent = (maxSize / $this.height()) * 100;
-            //$(this).css("max-width", precent+"%");
-            $this.css("max-height", precent+"%");
-            $this.css("padding-left", (maxSize - $this.width()) / 2);
-            $this.css("padding-right", (maxSize - $this.width()) / 2);
+            let scale = maxSize / $this.height();
+            let padding = (maxWidth - $this.width() * scale) / 2;
+            $this.css("padding-left", padding);
+            $this.css("padding-right", padding);
         }else if($this.height() < maxSize){
-            $this.css("padding-top", (maxSize - $this.height()) / 2+"px");
-            $this.css("padding-bottom", (maxSize - $this.height()) / 2+"px");
+            $this.css("padding-top", (maxSize - $this.height()) / 2);
+            $this.css("padding-bottom", (maxSize - $this.height()) / 2);
         }
     });
 
@@ -26,9 +25,9 @@ $(document).ready(function(){
     });
 
     $("#itemImg").change(function(){
-        var file = this.files[0];
+        let file = this.files[0];
         if (window.FileReader) {
-            var reader = new FileReader();
+            let reader = new FileReader();
             reader.readAsDataURL(file);
             //监听文件读取结束后事件
             reader.onloadend = function (e) {
