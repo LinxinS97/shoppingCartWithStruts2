@@ -28,6 +28,69 @@
                 <jsp:include page="userInfo.jsp"/>
             </div>
 
+            <%--条件搜索面板--%>
+            <div class="col-xs-10">
+                <form class="form-inline" action="Management" method="get" id="manage-search">
+                    <h4 style="margin: 5px 0 20px 0;">条件搜索</h4>
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <div class="form-group">
+                                <label for="itemName">商品名称：</label>
+                                <input class="form-control" type="text" name="itemName" id="itemName">
+                            </div>
+                        </div>
+
+                        <div class="col-xs-4">
+                            <div class="form-group">
+                                <label for="price">商品价格：</label>
+                                <input class="form-control"
+                                       type="number" id="price" step="0.01" name="price" style="width: 25%;">
+                                到&nbsp;
+                                <input class="form-control"
+                                       type="number" step="0.01" name="price" style="width: 25%;">
+                            </div>
+                        </div>
+                        <div class="col-xs-4">
+                            <div class="form-group">
+                                <label for="itemGroup">商品类别：</label>
+                                <select class="form-control" id="itemGroup" name="type">
+                                    <option>服装</option>
+                                    <option>手机</option>
+                                    <option>家电</option>
+                                    <option>数码</option>
+                                    <option>游戏</option>
+                                    <option>动漫</option>
+                                    <option>影视</option>
+                                    <option>美食</option>
+                                    <option>办公</option>
+                                    <option>游戏</option>
+                                    <option>卡券</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-xs-8">
+                            <div class="form-group">
+                                <label for="sole">成交数量：</label>
+                                <input class="form-control" type="number" name="sole" id="sole" style="width: 25%;">
+                                &nbsp;到
+                                <input class="form-control" type="number" name="sole" style="width: 25%;">
+
+                            </div>
+                        </div>
+                        <div class="col-xs-4">
+                            <button class="btn-sm btn-default" type="submit">条件搜索</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-xs-10 text-center" id="manage-line">
+                <div class="col-xs-5"><hr></div>
+                <div class="col-xs-2" style="height: 20px;"><p>搜索结果</p></div>
+                <div class="col-xs-5"><hr></div>
+            </div>
             <s:iterator value="itemList" id="item">
             <div class="col-xs-10">
                 <div class="media items">
@@ -41,9 +104,10 @@
                     <div class="media-body">
                         <h4 class="media-heading"><s:property value="#item.itemName"/></h4>
                         <h5>
-                            价格：<s:property value="#item.price"/> &nbsp;&nbsp;
+                            商品ID：<s:property value="#item.itemId"/>
                         </h5>
                         <h6>
+                            价格：￥<s:property value="#item.price"/> &nbsp;&nbsp;
                             类型：<s:property value="#item.type"/> &nbsp;&nbsp;
                             库存：<s:property value="#item.stock"/> &nbsp;&nbsp;
                             成交量：0
@@ -52,9 +116,8 @@
                 </div>
             </div>
             </s:iterator>
-
-
         </div>
+
         <div class="row">
             <div class="col-xs-4 col-xs-offset-2">
                 <nav aria-label="Page navigation">
@@ -116,6 +179,13 @@
     </div>
     <script src="js/jquery-3.2.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script>
+        $(function () {
+            $("#date").blur(function () {
+                console.log($(this).val());
+            })
+        })
+    </script>
     <script src="js/localJs_main.js"></script>
 </body>
 </html>

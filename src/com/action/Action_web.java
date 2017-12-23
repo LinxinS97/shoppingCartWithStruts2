@@ -160,6 +160,7 @@ public class Action_web extends ActionSupport implements SessionAware{
     //requestType2: get all soled items
     //requestType3: get all order information
     //requestType4: changePage
+    //requestType5: find items with keys
     @Action(value = "Management", results = {
             @Result(location = "/manage/manage.jsp"),
             @Result(name = "error", location = "/login.jsp")
@@ -169,7 +170,10 @@ public class Action_web extends ActionSupport implements SessionAware{
             return ERROR;
         User user = (User)session.get("user");
         if("1".equals(requestType)) {
-            //初始化
+            //每页显示最大商品数
+            int max = 6;
+
+            //page初始化
             if(page == 0 && session.get("page") == null)
                 page = 1;
             else if(session.get("page") != null && page == 0)
@@ -182,17 +186,20 @@ public class Action_web extends ActionSupport implements SessionAware{
                 page -= 1;
                 System.out.println("page = " + page);
             }
+
             //向后
             if(next == 1){
                 page = (int)session.get("page");
                 page += 1;
                 System.out.println("page = " + page);
             }
+
             //第一个物品的索引
-            int firstIndex = page * 8 - 8;
+            int firstIndex = page * max - max;
+
             //调用查询方法
             com.pojo.Result res = ItemFactory.findItem(
-                    null, null, -1, user.getUserId(), firstIndex, 8
+                    null, null, -1, user.getUserId(), firstIndex, max
             );
 
             maxPage = res.getMaxPage();

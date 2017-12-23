@@ -99,6 +99,22 @@
     padding-top: 70px;
 }
 
+#manage-search{
+    background-color: #fcf8e5;
+    padding: 10px;
+}
+
+#manage-line .col-xs-5{
+    padding: 0;
+}
+
+#manage-line .col-xs-5 hr{
+    margin: 10px 0 10px 0;
+    padding: 10px 0 0 0;
+    height:1px;
+    border:none;
+    border-top:1px ridge black;
+}
 
 #main-manage .col-xs-2{
     padding-left:   0;

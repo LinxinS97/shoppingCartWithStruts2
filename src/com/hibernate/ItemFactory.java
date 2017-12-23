@@ -1,18 +1,49 @@
 package com.hibernate;
 
 import com.pojo.Item;
+import com.pojo.Item_;
 import com.pojo.Result;
-import com.sun.org.apache.regexp.internal.RE;
 import org.hibernate.Session;
-import org.hibernate.query.Query;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import java.util.List;
 
 public class ItemFactory {
 
 
     public static void main(String[] args){
-        System.out.println(16 % 8);
+        Session session = HibernateFactory.getSession();
+
+//        //全新的数据库查询方式Criteria，用来替代hql，可读性高
+//        CriteriaBuilder builder = session.getCriteriaBuilder();
+//        CriteriaQuery<Item> criteria = builder.createQuery(Item.class);
+//        Root<Item> root = criteria.from(Item.class);
+//
+//        criteria.select(root);
+//
+//        //Item_.itemName is an example of the static form of JPA Metamodel reference
+//        Predicate ItemNameRestriction = builder.and(
+//                builder.like(root.get(Item_.itemName), "%测试%")
+//        );
+//
+//        Predicate ItemPriceRestriction = builder.and(
+//                builder.between(root.get(Item_.price), new BigDecimal(100), new BigDecimal(200))
+//        );
+//
+//        Predicate ItemTypeRestriction = builder.and(
+//                builder.equal(root.get(Item_.type), "动漫")
+//        );
+//
+//        criteria.where( builder.and(ItemNameRestriction, ItemPriceRestriction, ItemTypeRestriction) );
+//
+        List<Item> items = ItemFactory.findItem("测试", "数码", -1, 10000, 0, 10).getList();
+
+        for(Item item : items){
+            System.out.println(item.getItemName());
+        }
     }
 
     /**
@@ -26,48 +57,64 @@ public class ItemFactory {
      * @return Result     返回包含商品信息的集合和分页的信息
      */
     public static Result findItem(String key, String type, int itemId, int userId, int first, int max){
-        int maxPage = 0;
+        int maxPage;
         int maxItem = 0;
+        int size;
         List<Item> items;
-
         Session session = HibernateFactory.getSession();
-        String hql_key = "from Item where itemName like ?1";
-        String hql_type = "from Item where type = ?1";
-        String hql_itemId = "from Item where itemId = ?1";
-        String hql_userId = "from Item where userId = ?1";
+        //初始化Criteria对象
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        //设置查询对象
+        CriteriaQuery<Item> criteria = builder.createQuery(Item.class);
+        //设置查询根对象
+        Root<Item> root = criteria.from(Item.class);
+
+        //初始化限制条件
+        Predicate ItemKeyRestriction = builder.and();
+        Predicate ItemTypeRestriction = builder.and();
+        Predicate ItemItemIdRestriction = builder.and();
+        Predicate ItemUserIdRestriction = builder.and();
 
         if(key != null){
-            Query<Item> q = session.createQuery(hql_key, Item.class);
-            q.setParameter(1, "%"+key+"%");
-            items = q.list();
+            ItemKeyRestriction = builder.and(
+                    builder.like(root.get(Item_.itemName), "%" + key + "%")
+            );
 
-        } else if(type != null){
-            Query<Item> q = session.createQuery(hql_type, Item.class);
-            q.setParameter(1, type);
-            items = q.list();
-
-        } else if(itemId != -1){
-            Query<Item> q = session.createQuery(hql_itemId, Item.class);
-            q.setParameter(1, itemId);
-            items = q.list();
-
-        } else{
-            Query<Item> q = session.createQuery(hql_userId, Item.class);
-            q.setParameter(1, userId);
-            int size = q.list().size();
-            maxPage = size / 8 == 0 ? 1 : q.list().size() % 8 == 0 ? q.list().size() / 8 : q.list().size() / 8 + 1;
-            maxItem = size;
-
-            q.setMaxResults(max);
-            q.setFirstResult(first);
-            items = q.list();
         }
+        if(type != null){
+            ItemTypeRestriction = builder.and(
+                    builder.equal(root.get(Item_.type), type)
+            );
+
+        }
+        if(itemId != -1){
+            ItemItemIdRestriction = builder.and(
+                    builder.equal(root.get(Item_.itemId), itemId)
+            );
+
+        }
+        if (userId != -1){
+
+            ItemUserIdRestriction = builder.and(
+                    builder.equal(root.get(Item_.userId), userId)
+            );
+        }
+        criteria.where( builder.and(
+                ItemKeyRestriction,
+                ItemTypeRestriction,
+                ItemItemIdRestriction,
+                ItemUserIdRestriction
+        ) );
+        size = session.createQuery(criteria).getResultList().size();
+        maxPage = size / max == 0 ? 1 : size % max == 0 ? size / max : size / max + 1;
+        maxItem = size;
+        items = session.createQuery(criteria)
+                .setFirstResult(first)
+                .setMaxResults(max)
+                .getResultList();
 
         session.close();
         return new Result(maxPage, maxItem, items);
     }
-
-    
-
 
 }
