@@ -45,6 +45,9 @@ public class Action_web extends ActionSupport implements SessionAware{
     private String[] uploadContentType;
     private File[] upload;
 
+    //change page
+    private int previous;
+    private int next;
 
 
 
@@ -122,8 +125,17 @@ public class Action_web extends ActionSupport implements SessionAware{
 
 
 
+    public void setPrevious(int previous) {
+        this.previous = previous;
+    }
 
+    public void setNext(int next) {
+        this.next = next;
+    }
 
+    public void setMaxPage(int maxPage) {
+        this.maxPage = maxPage;
+    }
 
 
 
@@ -144,21 +156,51 @@ public class Action_web extends ActionSupport implements SessionAware{
 
     //This action will redirect to the main_seller.jsp
     //Information includes all items that this seller selling.
+    //requestType1: get 8 items
+    //requestType2: get all soled items
+    //requestType3: get all order information
+    //requestType4: changePage
     @Action(value = "Management", results = {
             @Result(location = "/manage/manage.jsp"),
-            @Result(name = "ERROR", location = "/login.jsp")
+            @Result(name = "error", location = "/login.jsp")
     })
     public String Management(){
         if(session.get("user") == null)
             return ERROR;
         User user = (User)session.get("user");
         if("1".equals(requestType)) {
-            com.pojo.Result res = ItemFactory.findItem(null, null, -1, user.getUserId(), 0, 8);
-            page = 1;
+            //初始化
+            if(page == 0 && session.get("page") == null)
+                page = 1;
+            else if(session.get("page") != null && page == 0)
+                page = (int)session.get("page");
+            System.out.println("page = " + page);
+
+            //向前
+            if(previous == 1 && page != 0){
+                page = (int)session.get("page");
+                page -= 1;
+                System.out.println("page = " + page);
+            }
+            //向后
+            if(next == 1){
+                page = (int)session.get("page");
+                page += 1;
+                System.out.println("page = " + page);
+            }
+            //第一个物品的索引
+            int firstIndex = page * 8 - 8;
+            //调用查询方法
+            com.pojo.Result res = ItemFactory.findItem(
+                    null, null, -1, user.getUserId(), firstIndex, 8
+            );
+
             maxPage = res.getMaxPage();
             itemList = res.getList();
             maxItem = res.getMaxItem();
             session.put("maxItem", maxItem);
+            session.put("page", page);
+            System.out.println("maxPage = " + maxPage);
         }
         return SUCCESS;
     }
@@ -273,4 +315,5 @@ public class Action_web extends ActionSupport implements SessionAware{
         AlterFactory.add(user);
         return SUCCESS;
     }
+
 }

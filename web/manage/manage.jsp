@@ -46,7 +46,7 @@
                         <h6>
                             类型：<s:property value="#item.type"/> &nbsp;&nbsp;
                             库存：<s:property value="#item.stock"/> &nbsp;&nbsp;
-                            成交量：11
+                            成交量：0
                         </h6>
                     </div>
                 </div>
@@ -59,26 +59,56 @@
             <div class="col-xs-4 col-xs-offset-2">
                 <nav aria-label="Page navigation">
                     <ul class="pagination">
-                        <li>
-                            <a class="page-num">
-                                1
-                            </a>
-                        </li>
-                        <li>
-                            <a class="page-num">
-                                2
-                            </a>
-                        </li>
-                        <li>
-                            <a class="page-num">
-                                3
-                            </a>
-                        </li>
-                        <li>
-                            <a class="page-num">
-                                4
-                            </a>
-                        </li>
+                        <%--向前翻页--%>
+                        <s:if test="page == 1">
+                            <li class="disabled">
+                                <a aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                        </s:if>
+                        <s:else>
+                            <li>
+                                <a href="Management?requestType=1&previous=1" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                        </s:else>
+
+                        <%--页码翻页--%>
+                        <s:iterator begin="1" end="maxPage" status="st">
+                            <s:if test="page == #st.index + 1">
+                                <li class="active">
+                                    <a class="page-num">
+                                        <s:property value="#st.index + 1"/>
+                                    </a>
+                                </li>
+                            </s:if>
+                            <s:else>
+                                <li>
+                                    <a href="Management?requestType=1&page=<s:property value="#st.index + 1"/>"
+                                       class="page-num">
+                                        <s:property value="#st.index + 1"/>
+                                    </a>
+                                </li>
+                            </s:else>
+                        </s:iterator>
+
+                        <%--向后翻页--%>
+                        <s:if test="page == maxPage">
+                            <li class="disabled">
+                                <a aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </s:if>
+                        <s:else>
+                            <li>
+                                <a href="Management?requestType=1&next=1" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </s:else>
                     </ul>
                 </nav>
             </div>
