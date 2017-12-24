@@ -1,19 +1,4 @@
 $(document).ready(function(){
-    let $Img = $(".main-img");
-    let maxSize = 71;
-    let maxWidth = 66.5;
-    $Img.each(function(){
-        let $this = $(this);
-        if($this.height() > maxSize){
-            let scale = maxSize / $this.height();
-            let padding = (maxWidth - $this.width() * scale) / 2;
-            $this.css("padding-left", padding);
-            $this.css("padding-right", padding);
-        }else if($this.height() < maxSize){
-            $this.css("padding-top", (maxSize - $this.height()) / 2);
-            $this.css("padding-bottom", (maxSize - $this.height()) / 2);
-        }
-    });
 
     $("#itemPrice").change(function(){
        if($(this).val() < 0)

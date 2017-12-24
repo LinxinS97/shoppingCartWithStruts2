@@ -116,10 +116,8 @@
             <s:iterator value="itemList" id="item">
             <div class="col-xs-10">
                 <div class="media items">
-                    <div class="media-left">
-                        <a href="#">
-                            <img class="media-object img-thumbnail main-img" src="<s:property value="#item.itemImg"/> ">
-                        </a>
+                    <div class="media-left img-thumbnail manage-box">
+                        <img class="media-object main-img" src="<s:property value="#item.itemImg"/> ">
                     </div>
 
 

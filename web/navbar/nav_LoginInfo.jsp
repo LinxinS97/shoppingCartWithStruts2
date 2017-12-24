@@ -24,12 +24,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <li>
             <a aria-hidden="true" href="myInfo.jsp">雷猴啊，${user.getUserName() }</a>
         </li>
-        <li class="dropdown">
-            <ul class="dropdown-menu">
-                <li><a href="#">待付款<span class="badge">0</span></a></li>
-                <li><a href="#">待收货<span class="badge">0</span></a></li>
-                <li><a href="#">待评价<span class="badge">0</span></a></li>
-            </ul>
+        <li>
+            <a href="Management?requestType=1">我的商品管理</a>
         </li>
         <li>
             <a href="logout">退出登录</a>

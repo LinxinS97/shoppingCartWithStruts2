@@ -23,6 +23,8 @@ import java.util.UUID;
 
 
 public class Action_web extends ActionSupport implements SessionAware{
+
+
     private Map<String, Object> session;
     private String requestType;
     private int maxPage;
@@ -58,7 +60,15 @@ public class Action_web extends ActionSupport implements SessionAware{
     private int[] search_order;
     private int[] search_stock;
 
+    //main.jsp param
+    private List<Item> carouselItems;
 
+
+
+    @Override
+    public void setSession(Map<String, Object> map) {
+        session = map;
+    }
 
     public List<Item> getItemList() {
         return itemList;
@@ -83,7 +93,6 @@ public class Action_web extends ActionSupport implements SessionAware{
     public void setUserName(String userName) {
         this.userName = userName;
     }
-
 
     public void setUploadFileName(String[] uploadFileName) {
         this.uploadFileName = uploadFileName;
@@ -113,13 +122,6 @@ public class Action_web extends ActionSupport implements SessionAware{
         this.type = type;
     }
 
-    @Override
-    public void setSession(Map<String, Object> map) {
-        session = map;
-    }
-
-
-
     public int getMaxPage() {
         return maxPage;
     }
@@ -132,8 +134,6 @@ public class Action_web extends ActionSupport implements SessionAware{
         this.page = page;
     }
 
-
-
     public void setPrevious(int previous) {
         this.previous = previous;
     }
@@ -145,7 +145,6 @@ public class Action_web extends ActionSupport implements SessionAware{
     public void setMaxPage(int maxPage) {
         this.maxPage = maxPage;
     }
-
 
     public void setIsSearch(String isSearch) {
         this.isSearch = isSearch;
@@ -171,7 +170,9 @@ public class Action_web extends ActionSupport implements SessionAware{
         this.search_stock = search_stock;
     }
 
-
+    public List<Item> getCarouselItems() {
+        return carouselItems;
+    }
 
 
 
@@ -182,6 +183,7 @@ public class Action_web extends ActionSupport implements SessionAware{
             @Result(location = "/main.jsp")
     })
     public String Welcome(){
+        carouselItems = ItemFactory.getCarouselItem();
         return SUCCESS;
     }
 
@@ -233,9 +235,11 @@ public class Action_web extends ActionSupport implements SessionAware{
 
         if("1".equals(requestType)) {
             session.remove("searchKeys");
+            SearchKeys keys = new SearchKeys();
+            keys.setSearch_userId(user.getUserId());
             //调用查询方法
-            com.pojo.Result res = ItemFactory.findItem(
-                    null, null, -1, user.getUserId(), firstIndex, max
+            com.pojo.Result res = ItemFactory.MeticulousSearch(
+                    keys, firstIndex, max
             );
             maxPage = res.getMaxPage();
             itemList = res.getList();
@@ -264,6 +268,7 @@ public class Action_web extends ActionSupport implements SessionAware{
                     search_type = null;
 
                 keys = new SearchKeys(search_name, search_price, search_type, search_order, search_stock);
+                keys.setSearch_userId(user.getUserId());
                 session.put("searchKeys", keys);
             }
 
@@ -294,6 +299,7 @@ public class Action_web extends ActionSupport implements SessionAware{
 
 
 
+    //发布商品
     @Action(value = "upload",
             results = {
             @Result(type = "chain", location = "Management")},
@@ -391,6 +397,5 @@ public class Action_web extends ActionSupport implements SessionAware{
         AlterFactory.add(user);
         return SUCCESS;
     }
-
 
 }

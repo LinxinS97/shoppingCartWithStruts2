@@ -85,26 +85,31 @@
                         <li data-target="#carousel-example-generic" data-slide-to="1"></li>
                         <li data-target="#carousel-example-generic" data-slide-to="2"></li>
                         <li data-target="#carousel-example-generic" data-slide-to="3"></li>
-                        <li data-target="#carousel-example-generic" data-slide-to="4"></li>
                     </ol>
                     <!-- 轮播图片 -->
                     <div class="carousel-inner" role="listbox">
                         <div class="item active">
-                            <img src="source/pic/carousel-active.jpg" alt="First IMG"
-                                 style="width:739px;height:440px">
+                            <div style="width: 682px; height: 440px; text-align: center;
+                                display: table-cell;vertical-align: middle;">
+                                <img class="carousel-image" src="source/pic/carousel-active.jpg" alt="First IMG">
+                            </div>
                             <div class="carousel-caption">
                                 <h3>四次元口袋</h3>
                                 <p>想象，是发现的本质</p>
                             </div>
                         </div>
-                        <%--<c:forEach items="${carouselItem }" var="img">--%>
-                            <%--<div class="item">--%>
-                                <%--<a class="items" ItemID=<c:out value="${img.getID() }"/>>--%>
-                                    <%--<img src=<c:out value="${img.getItemImgPath() }"/>--%>
-                                         <%--style="width:739px;height:440px">--%>
-                                <%--</a>--%>
-                            <%--</div>--%>
-                        <%--</c:forEach>--%>
+                        <s:iterator value="carouselItems" id="item">
+                        <div class="item">
+                            <div style="width: 682px; height: 440px; text-align: center;
+                                display: table-cell;vertical-align: middle;">
+                                <img class="carousel-image" src="<s:property value="#item.itemImg"/>">
+                            </div>
+                            <div class="carousel-caption">
+                                <h3><s:property value="#item.itemName"/> </h3>
+                                <p><s:property value="#item.price"/> </p>
+                            </div>
+                        </div>
+                        </s:iterator>
                     </div>
 
                     <!-- 左右两侧的控制按钮 -->

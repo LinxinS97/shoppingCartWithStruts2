@@ -3,6 +3,7 @@ package com.pojo;
 import java.math.BigDecimal;
 
 public class SearchKeys {
+    private int search_userId;
     private String search_name;
     private BigDecimal[] search_price;
     private String search_type;
@@ -60,5 +61,13 @@ public class SearchKeys {
 
     public void setSearch_stock(int[] search_stock) {
         this.search_stock = search_stock;
+    }
+
+    public int getSearch_userId() {
+        return search_userId;
+    }
+
+    public void setSearch_userId(int search_userId) {
+        this.search_userId = search_userId;
     }
 }

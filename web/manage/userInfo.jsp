@@ -19,7 +19,7 @@
 <div class="list-group">
     <a class="list-group-item">
         <div class="media">
-            <div class="media-left">
+            <div class="media-left manage-box" style="width: 10000px">
                 <img class="media-object img-rounded main-img" src="${user.userImg}">
             </div>
             <div class="media-body">
