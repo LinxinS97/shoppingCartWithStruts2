@@ -101,7 +101,7 @@
 
 
 
-/*manage.jsp*/
+/* manage/manage.jsp、manage/userInfo.jsp */
 .body-management{
     padding-top: 70px;
 }
@@ -126,7 +126,7 @@
 #main-manage .col-xs-2{
     padding-left:   0;
     padding-right:  0;
-    height:         80%;
+    height:         90%;
     font-size:      15px
 }
 
@@ -163,6 +163,18 @@
     vertical-align: middle;
 }
 
+#main-manage .manage-form{
+    background-color: #FFFFFF;
+    padding: 30px 80px 10px 10px;
+}
+
+#main-manage .itemInfo-box{
+    width: 400px;
+    height: 400px;
+    text-align: center;
+    display: table-cell;
+    vertical-align: middle;
+}
 
 #main-manage .main-img{
     width: auto;

@@ -31,6 +31,8 @@ public class Action_web extends ActionSupport implements SessionAware{
     private int page;
     private int maxItem;
     private List<Item> itemList;
+    private int itemId;
+    private Item item;
 
     //register params
     private String userName;
@@ -68,6 +70,18 @@ public class Action_web extends ActionSupport implements SessionAware{
     @Override
     public void setSession(Map<String, Object> map) {
         session = map;
+    }
+
+    public void setItemId(int itemId) {
+        this.itemId = itemId;
+    }
+
+    public Item getItem() {
+        return item;
+    }
+
+    public void setItem(Item item) {
+        this.item = item;
     }
 
     public List<Item> getItemList() {
@@ -287,8 +301,22 @@ public class Action_web extends ActionSupport implements SessionAware{
     }
 
 
+    //跳转到商品的详细信息页面
+    @Action(value = "getItemInfo", results = {
+            @Result(location = "/manage/itemInfo.jsp"),
+            @Result(name = "error", location = "/login.jsp")
+    })
+    public String GetItemInfo(){
+        if(session.get("user") == null)
+            return ERROR;
 
-    //Remove 'User' info in session then return SUCCESS.
+        item = ItemFactory.getItemWithItemId(itemId);
+        return SUCCESS;
+    }
+
+
+
+    //把session中的user信息删除，退出登录
     @Action(value = "logout", results = {
             @Result(location = "/index.jsp")
     })
@@ -339,7 +367,53 @@ public class Action_web extends ActionSupport implements SessionAware{
         return SUCCESS;
     }
 
+    //重新发布商品，可以更改商品除了用户id和商品id以外的所有信息
+    @Action(value = "reUpload",
+            results = {
+                    @Result(type = "chain", location = "Management")},
+            interceptorRefs = {
+                    @InterceptorRef(value = "fileUpload", params = {
+                            "allowedExtensions", ".jpg,.jpeg,.png",
+                            "maximumSize", "1048576"
+                    }),
+                    @InterceptorRef(value = "defaultStack")}
+    )
+    public String ReUpload(){
+        System.out.println("itemName: " + itemName + "\nprice: " + price + "\nstock :" + stock + "\n type: " + type);
 
+        Item item = new Item();
+        Item item_before = ItemFactory.getItemWithItemId(itemId);
+        User user = (User)session.get("user");
+
+        if(upload != null){
+            System.out.println("upload name : " + uploadFileName[0]);
+            String suffix = uploadFileName[0].split("\\.")[1];     //文件后缀，看不懂是傻逼
+            String uuid = UUID.randomUUID() + "";
+            String imgPath = "/itemImg/" + uuid + "." + suffix;
+            item.setItemImg(imgPath);
+            File itemImg = new File("/Users/elpis/FilesForShoppingCart_Struts2/itemsImgs");
+            File img_before = new File("/Users/elpis/FilesForShoppingCart_Struts2/itemsImgs/"
+                    + item_before.getItemImg().split("/")[2]);
+            System.out.println(img_before.delete());
+            try {
+                //保存文件
+                FileUtils.copyFile(upload[0], new File(itemImg, uuid + "." + suffix));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        item.setUserId(user.getUserId());
+        item.setItemId(itemId);
+        item.setItemName(itemName);
+        item.setPrice(BigDecimal.valueOf(price));
+        item.setStock(stock);
+        item.setType(type);
+        item.setUserId(user.getUserId());
+
+        AlterFactory.alter(item);
+        return SUCCESS;
+    }
 
     //注册Action，把手机号放到session中，方便下一个Action调用
     @Action(value = "RegisterUsername", results = {

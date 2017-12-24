@@ -1,8 +1,10 @@
 package com.pojo;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 
 public class SearchKeys {
+    private int search_itemId;
     private int search_userId;
     private String search_name;
     private BigDecimal[] search_price;
@@ -69,5 +71,26 @@ public class SearchKeys {
 
     public void setSearch_userId(int search_userId) {
         this.search_userId = search_userId;
+    }
+
+    public int getSearch_itemId() {
+        return search_itemId;
+    }
+
+    public void setSearch_itemId(int search_itemId) {
+        this.search_itemId = search_itemId;
+    }
+
+    @Override
+    public String toString() {
+        return "SearchKeys{" +
+                "search_itemId=" + search_itemId +
+                ", search_userId=" + search_userId +
+                ", search_name='" + search_name + '\'' +
+                ", search_price=" + Arrays.toString(search_price) +
+                ", search_type='" + search_type + '\'' +
+                ", search_order=" + Arrays.toString(search_order) +
+                ", search_stock=" + Arrays.toString(search_stock) +
+                '}';
     }
 }

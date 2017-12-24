@@ -9,6 +9,23 @@ $(document).ready(function(){
             $(this).val(0);
     });
 
+    $(".delete-item").click(function () {
+        let $this = $(this);
+        let itemId = $this.attr("itemId");
+
+        console.log(itemId);
+        $.ajax({
+            type:   "get",
+            url:    "deleteItem",
+            data:{
+                itemId: itemId
+            },
+            success:function () {
+                $this.parent().parent().parent().parent().remove();
+            }
+        })
+    });
+
     $("#itemImg").change(function(){
         let file = this.files[0];
         if (window.FileReader) {

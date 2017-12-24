@@ -108,11 +108,15 @@
                     </div>
                 </form>
             </div>
+
+            <%--搜索结果分隔--%>
             <div class="col-xs-10 text-center" id="manage-line">
                 <div class="col-xs-5"><hr></div>
                 <div class="col-xs-2" style="height: 20px;"><p>搜索结果</p></div>
                 <div class="col-xs-5"><hr></div>
             </div>
+
+            <%--货品信息--%>
             <s:iterator value="itemList" id="item">
             <div class="col-xs-10">
                 <div class="media items">
@@ -130,14 +134,23 @@
                             价格：￥<s:property value="#item.price"/> &nbsp;&nbsp;
                             类型：<s:property value="#item.type"/> &nbsp;&nbsp;
                             库存：<s:property value="#item.stock"/> &nbsp;&nbsp;
-                            成交量：0
+                            成交量：<s:property value="#item.completeOrder"/>
+                            <a href="getItemInfo?itemId=<s:property value="#item.itemId"/>" style="float: right;">
+                                编辑
+                            </a>
+                            <a class="delete-item" style="float: right; margin-right: 10px"
+                               role="button" itemId="<s:property value="#item.itemId"/> ">
+                                删除
+                            </a>
                         </h6>
+
                     </div>
                 </div>
             </div>
             </s:iterator>
         </div>
 
+        <%--分页符--%>
         <div class="row">
             <div class="col-xs-4 col-xs-offset-2">
                 <nav aria-label="Page navigation">

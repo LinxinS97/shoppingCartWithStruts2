@@ -1,7 +1,11 @@
 package com.action;
 
+import com.hibernate.AlterFactory;
+import com.hibernate.ItemFactory;
 import com.hibernate.UserFactory;
 import com.opensymphony.xwork2.ActionSupport;
+import com.pojo.Item;
+import com.pojo.ItemPK;
 import com.pojo.User;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.ParentPackage;
@@ -9,24 +13,19 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.interceptor.SessionAware;
 
 
+import java.io.File;
 import java.util.Map;
 
 @ParentPackage(value = "json-default")
 public class Action_json extends ActionSupport implements SessionAware{
     private Map<String, Object> session;
-    private String request_type;
     private String psw;
     private String tel;
     private String options;
-    private String itemId;
-    private String itemName;
-    private String price;
+    private int itemId;
     private String flag;
 
 
-    public void setRequest_type(String request_type) {
-        this.request_type = request_type;
-    }
 
     public void setPsw(String psw) {
         this.psw = psw;
@@ -44,16 +43,8 @@ public class Action_json extends ActionSupport implements SessionAware{
         return options;
     }
 
-    public void setItemId(String itemId) {
+    public void setItemId(int itemId) {
         this.itemId = itemId;
-    }
-
-    public void setItemName(String itemName) {
-        this.itemName = itemName;
-    }
-
-    public void setPrice(String price) {
-        this.price = price;
     }
 
     public String getFlag() {
@@ -135,5 +126,20 @@ public class Action_json extends ActionSupport implements SessionAware{
         return SUCCESS;
     }
 
+    //Delete ITEM from Table "item" then return SUCCESS.
+    @Action(value = "deleteItem", results = {
+            @Result(type = "json")
+    })
+    public String DeleteItem(){
+        System.out.println(itemId);
+        Item item = ItemFactory.getItemWithItemId(itemId);
+        String[] imgName = item.getItemImg().split("/");
+        System.out.println(imgName.length);
+        System.out.println(imgName[2]);
+        File itemImg = new File("/Users/elpis/FilesForShoppingCart_Struts2/itemsImgs/" + imgName[2]);
+        itemImg.delete();
+        AlterFactory.delete(item);
+        return SUCCESS;
+    }
 
 }

@@ -98,15 +98,18 @@
                                 <p>想象，是发现的本质</p>
                             </div>
                         </div>
+
+                        <%--carousel图片，点击跳转到商品详情页面--%>
                         <s:iterator value="carouselItems" id="item">
                         <div class="item">
                             <div style="width: 682px; height: 440px; text-align: center;
                                 display: table-cell;vertical-align: middle;">
-                                <img class="carousel-image" src="<s:property value="#item.itemImg"/>">
+                                <img href="GetItemInfo?itemId=<s:property value="#item.itemId"/>"
+                                     class="carousel-image" src="<s:property value="#item.itemImg"/>">
                             </div>
                             <div class="carousel-caption">
                                 <h3><s:property value="#item.itemName"/> </h3>
-                                <p><s:property value="#item.price"/> </p>
+                                <p>￥<s:property value="#item.price"/> </p>
                             </div>
                         </div>
                         </s:iterator>

@@ -1,6 +1,7 @@
 package com.hibernate;
 
 import com.pojo.*;
+import org.apache.struts2.interceptor.SessionAware;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
@@ -13,13 +14,14 @@ import java.util.List;
 public class ItemFactory {
 
 
-//    public static void main(String[] args){
-//        List<Item> items = ItemFactory.getCarouselItem();
-//
+    public static void main(String[] args){
+        Item items = ItemFactory.getItemWithItemId(4);
+
+        System.out.println(items.getItemName());
 //        for(Item item : items){
 //            System.out.println(item.getItemName());
 //        }
-//    }
+    }
 
     /**
      * 精细搜索，综合商品的各种参数进行搜索
@@ -30,7 +32,7 @@ public class ItemFactory {
      */
     public static Result MeticulousSearch(SearchKeys keys, int first, int max){
         int maxPage;
-        int maxItem = 0;
+        int maxItem;
         int size;
         List<Item> items;
 
@@ -42,6 +44,7 @@ public class ItemFactory {
         //设置查询根对象
         Root<Item> root = criteria.from(Item.class);
         //初始化限制条件
+
         //userId
         Predicate ItemUserIdRestriction = builder.and();
         //商品名称
@@ -55,9 +58,10 @@ public class ItemFactory {
         //商品库存区间
         Predicate ItemStockNumRestriction = builder.and();
 
+
         if(keys.getSearch_userId() != -1){
             ItemUserIdRestriction = builder.and(
-                    builder.equal( root.get(Item_.userId), keys.getSearch_userId())
+                    builder.equal( root.get(Item_.userId), keys.getSearch_userId() )
             );
         }
 
@@ -115,11 +119,26 @@ public class ItemFactory {
      */
     public static List<Item> getCarouselItem(){
         Session session = HibernateFactory.getSession();
-        List<Item> items;
         Query<Item> q = session.createQuery("from Item i order by completeOrder desc", Item.class).setMaxResults(3);
-        items = q.list();
+        List<Item> items = q.list();
         session.close();
 
         return items;
+    }
+
+
+    /**
+     * 用于返回用商品id查找的唯一商品
+     *
+     * @param itemId 商品id
+     * @return Item
+     */
+    public static Item getItemWithItemId(int itemId){
+        Session session = HibernateFactory.getSession();
+        Query<Item> q= session.createQuery("from Item where itemId=?1", Item.class);
+        q.setParameter(1, itemId);
+        List<Item> items = q.list();
+        session.close();
+        return items.get(0);
     }
 }
