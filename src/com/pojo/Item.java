@@ -13,6 +13,7 @@ public class Item {
     private int stock;
     private int userId;
     private String itemImg;
+    private int completeOrder;
 
     @Id
     @Column(name = "itemId")
@@ -108,5 +109,15 @@ public class Item {
 
     public void setItemImg(String itemImg) {
         this.itemImg = itemImg;
+    }
+
+    @Basic
+    @Column(name = "completeOrder")
+    public int getCompleteOrder(){
+        return completeOrder;
+    }
+
+    public void setCompleteOrder(int completeOrder) {
+        this.completeOrder = completeOrder;
     }
 }

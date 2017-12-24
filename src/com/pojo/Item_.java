@@ -13,5 +13,6 @@ public class Item_{
     public static volatile SingularAttribute<Item, String> type;
     public static volatile SingularAttribute<Item, String> itemImg;
     public static volatile SingularAttribute<Item, BigDecimal> price;
+    public static volatile SingularAttribute<Item, Integer> completeOrder;
 
 }

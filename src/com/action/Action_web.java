@@ -4,6 +4,7 @@ import com.hibernate.AlterFactory;
 import com.hibernate.ItemFactory;
 import com.opensymphony.xwork2.ActionSupport;
 import com.pojo.Item;
+import com.pojo.SearchKeys;
 import com.pojo.User;
 import org.apache.commons.io.FileUtils;
 import org.apache.struts2.convention.annotation.Action;
@@ -48,6 +49,14 @@ public class Action_web extends ActionSupport implements SessionAware{
     //change page
     private int previous;
     private int next;
+
+    //MeticulousSearch params
+    private String isSearch = "0";
+    private String search_name;
+    private BigDecimal[] search_price;
+    private String search_type;
+    private int[] search_order;
+    private int[] search_stock;
 
 
 
@@ -138,6 +147,30 @@ public class Action_web extends ActionSupport implements SessionAware{
     }
 
 
+    public void setIsSearch(String isSearch) {
+        this.isSearch = isSearch;
+    }
+
+    public void setSearch_name(String search_name) {
+        this.search_name = search_name;
+    }
+
+    public void setSearch_price(BigDecimal[] search_price) {
+        this.search_price = search_price;
+    }
+
+    public void setSearch_type(String search_type) {
+        this.search_type = search_type;
+    }
+
+    public void setSearch_order(int[] search_order) {
+        this.search_order = search_order;
+    }
+
+    public void setSearch_stock(int[] search_stock) {
+        this.search_stock = search_stock;
+    }
+
 
 
 
@@ -163,49 +196,85 @@ public class Action_web extends ActionSupport implements SessionAware{
     //requestType5: find items with keys
     @Action(value = "Management", results = {
             @Result(location = "/manage/manage.jsp"),
-            @Result(name = "error", location = "/login.jsp")
+            @Result(name = "error", location = "/login.jsp"),
+            @Result(name = "input", location = "/manage/manage.jsp")
     })
     public String Management(){
+
         if(session.get("user") == null)
             return ERROR;
         User user = (User)session.get("user");
-        if("1".equals(requestType)) {
-            //每页显示最大商品数
-            int max = 6;
+        //每页显示最大商品数
+        int max = 6;
 
-            //page初始化
-            if(page == 0 && session.get("page") == null)
-                page = 1;
-            else if(session.get("page") != null && page == 0)
-                page = (int)session.get("page");
+        //page初始化
+        if(page == 0 && session.get("page") == null)
+            page = 1;
+        else if(session.get("page") != null && page == 0)
+            page = (int)session.get("page");
+        System.out.println("page = " + page);
+
+        //向前
+        if(previous == 1 && page != 0){
+            page = (int)session.get("page");
+            page -= 1;
             System.out.println("page = " + page);
+        }
 
-            //向前
-            if(previous == 1 && page != 0){
-                page = (int)session.get("page");
-                page -= 1;
-                System.out.println("page = " + page);
-            }
+        //向后
+        if(next == 1){
+            page = (int)session.get("page");
+            page += 1;
+            System.out.println("page = " + page);
+        }
 
-            //向后
-            if(next == 1){
-                page = (int)session.get("page");
-                page += 1;
-                System.out.println("page = " + page);
-            }
+        //第一个物品的索引
+        int firstIndex = page * max - max;
 
-            //第一个物品的索引
-            int firstIndex = page * max - max;
-
+        if("1".equals(requestType)) {
+            session.remove("searchKeys");
             //调用查询方法
             com.pojo.Result res = ItemFactory.findItem(
                     null, null, -1, user.getUserId(), firstIndex, max
             );
-
             maxPage = res.getMaxPage();
             itemList = res.getList();
             maxItem = res.getMaxItem();
             session.put("maxItem", maxItem);
+            session.put("requestType", "1");
+            session.put("page", page);
+            System.out.println("maxPage = " + maxPage);
+
+        } else if("5".equals(requestType)){
+            SearchKeys keys = null;
+            if(session.get("searchKeys") != null)
+                keys = (SearchKeys)session.get("searchKeys");
+
+            if(isSearch.equals("1")){
+                if(search_price[0].equals(search_price[1]) && search_price[0].equals(new BigDecimal(0)))
+                    search_price = null;
+
+                if(search_order[0] == search_order[1] && search_order[0] == 0)
+                    search_order = null;
+
+                if(search_stock[0] == search_stock[1] && search_stock[0] == 0)
+                    search_stock = null;
+
+                if("全部".equals(search_type))
+                    search_type = null;
+
+                keys = new SearchKeys(search_name, search_price, search_type, search_order, search_stock);
+                session.put("searchKeys", keys);
+            }
+
+            com.pojo.Result res = ItemFactory.MeticulousSearch(
+                    keys, firstIndex, max
+            );
+            maxPage = res.getMaxPage();
+            itemList = res.getList();
+            maxItem = res.getMaxItem();
+            session.put("maxItem", maxItem);
+            session.put("requestType", "5");
             session.put("page", page);
             System.out.println("maxPage = " + maxPage);
         }
@@ -322,5 +391,6 @@ public class Action_web extends ActionSupport implements SessionAware{
         AlterFactory.add(user);
         return SUCCESS;
     }
+
 
 }

@@ -36,7 +36,7 @@
                         <div class="col-xs-4">
                             <div class="form-group">
                                 <label for="itemName">商品名称：</label>
-                                <input class="form-control" type="text" name="itemName" id="itemName">
+                                <input class="form-control" type="text" name="search_name" id="itemName">
                             </div>
                         </div>
 
@@ -44,16 +44,20 @@
                             <div class="form-group">
                                 <label for="price">商品价格：</label>
                                 <input class="form-control"
-                                       type="number" id="price" step="0.01" name="price" style="width: 25%;">
+                                       type="number" id="price" step="0.01" name="search_price" value="0"
+                                       style="width: 25%;">
                                 到&nbsp;
                                 <input class="form-control"
-                                       type="number" step="0.01" name="price" style="width: 25%;">
+                                       type="number" step="0.01" name="search_price" value="0"
+                                       style="width: 25%;">
                             </div>
                         </div>
+
                         <div class="col-xs-4">
                             <div class="form-group">
-                                <label for="itemGroup">商品类别：</label>
-                                <select class="form-control" id="itemGroup" name="type">
+                                <label for="type">商品类别：</label>
+                                <select class="form-control" id="type" name="search_type">
+                                    <option>全部</option>
                                     <option>服装</option>
                                     <option>手机</option>
                                     <option>家电</option>
@@ -69,19 +73,37 @@
                             </div>
                         </div>
                     </div>
+
                     <br>
                     <div class="row">
-                        <div class="col-xs-8">
+                        <div class="col-xs-4">
                             <div class="form-group">
-                                <label for="sole">成交数量：</label>
-                                <input class="form-control" type="number" name="sole" id="sole" style="width: 25%;">
+                                <label for="order">成交数量：</label>
+                                <input class="form-control" type="number" name="search_order" value="0" id="order"
+                                       style="width: 25%;">
                                 &nbsp;到
-                                <input class="form-control" type="number" name="sole" style="width: 25%;">
+                                <input class="form-control" type="number" name="search_order" value="0"
+                                       style="width: 25%;">
 
                             </div>
                         </div>
                         <div class="col-xs-4">
+                            <div class="form-group">
+                                <label for="stock">库存：</label>
+                                <input class="form-control" type="number" name="search_stock" value="0" id="stock"
+                                       style="width: 25%;">
+                                &nbsp;到
+                                <input class="form-control" type="number" name="search_stock" value="0"
+                                       style="width: 25%;">
+
+                            </div>
+                        </div>
+                        <div class="col-xs-4">
+                            <input type="text" name="page" value="1" style="display: none;">
+                            <input type="text" name="requestType" value="5" style="display: none;">
+                            <input type="text" name="isSearch" value="1" style="display: none;">
                             <button class="btn-sm btn-default" type="submit">条件搜索</button>
+                            <button class="btn-sm btn-warning" type="reset">重置信息</button>
                         </div>
                     </div>
                 </form>
@@ -132,7 +154,8 @@
                         </s:if>
                         <s:else>
                             <li>
-                                <a href="Management?requestType=1&previous=1" aria-label="Previous">
+                                <a href="Management?requestType=${requestType}&previous=1"
+                                   aria-label="Previous">
                                     <span aria-hidden="true">&laquo;</span>
                                 </a>
                             </li>
@@ -149,7 +172,7 @@
                             </s:if>
                             <s:else>
                                 <li>
-                                    <a href="Management?requestType=1&page=<s:property value="#st.index + 1"/>"
+                                    <a href="Management?requestType=${requestType}&page=<s:property value="#st.index + 1"/>"
                                        class="page-num">
                                         <s:property value="#st.index + 1"/>
                                     </a>
@@ -167,7 +190,7 @@
                         </s:if>
                         <s:else>
                             <li>
-                                <a href="Management?requestType=1&next=1" aria-label="Next">
+                                <a href="Management?requestType=${requestType}&next=1" aria-label="Next">
                                     <span aria-hidden="true">&raquo;</span>
                                 </a>
                             </li>
