@@ -4,6 +4,15 @@
     background-color:	#f1f1f1;
 }
 
+.main-img{
+    width: auto;
+    height:auto;
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+    max-height: 100%;
+}
+
 #main-container .carousel-image{
     width: auto;
     height:auto;
@@ -26,44 +35,114 @@
     padding-left:   0;
 }
 
-#main-container .col-xs-3{
-    padding-left:5px;
-    padding-right:0;
-    padding-bottom:80px;
-    background-color:#fff;
+#main-right{
+    padding-left:       5px;
+    padding-right:      0;
+    padding-bottom:     80px;
+    background-color:   #fff;
 }
 
+#main-container .text-font{
+    display:        block;
+    overflow:       hidden;
+    text-overflow:  ellipsis;
+    white-space:    nowrap;
+}
+
+#main-container .col-xs-5{
+    padding: 0;
+}
+
+#main-container .col-xs-5 hr{
+    margin:     10px 0 10px 0;
+    padding:    10px 0 0 0;
+    height:     1px;
+    border:     none;
+    border-top: 1px ridge black;
+}
+
+#main-container .main-box{
+    width:          295px;
+    height:         200px;
+    text-align:     center;
+    display:        table-cell;
+    vertical-align: middle;
+}
+
+
 #tabletop{
-    margin-top:7px;
-    margin-bottom:7px;
+    margin-top:     7px;
+    margin-bottom:  7px;
 }
 
 #myBackground{
-    background-color:#337ab7;
+    background-color: #337ab7;
 }
 
 .wordDisplay{
-    position:relative;
+    position: relative;
 }
 
 .imgPosition{
-    margin-top:20px;
-    margin-bottom:10px;
+    margin-top:     20px;
+    margin-bottom:  10px;
 }
 
 #myWidth{
     min-width: 450px;
 }
 
-.dots{
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-}
 
 #myNavBar{
-    margin-bottom:0;
+    margin-bottom: 0;
 }
+
+
+
+
+
+
+/* itemInfo.jsp */
+#mainInfo-body{
+    padding-top: 		100px;
+    background-color:	#f1f1f1;
+}
+
+#mainInfo-container .info-box{
+    height:         400px;
+    width:          487px;
+    text-align:     center;
+    display:        table-cell;
+    vertical-align: middle;
+}
+
+#mainInfo-container .media{
+    padding: 10px;
+}
+
+#mainInfo-container .media-box{
+    height:         50px;
+    width:          150px;
+    text-align:     center;
+    display:        table-cell;
+    vertical-align: middle;
+}
+
+#mainInfo-container .price{
+    background-color:   #fcf8e5;
+    padding:            10px 10px 10px 0;
+    margin:             5px 0 5px 0;
+}
+
+#mainInfo-container .title{
+    margin: 25px 0 20px 0;
+}
+
+#mainInfo-container .type{
+    padding: 8px 0 0 0;
+}
+
+
 
 
 
@@ -174,15 +253,6 @@
     text-align: center;
     display: table-cell;
     vertical-align: middle;
-}
-
-#main-manage .main-img{
-    width: auto;
-    height:auto;
-    display: block;
-    margin: 0 auto;
-    max-width: 100%;
-    max-height: 100%;
 }
 
 #main-manage .col-xs-9{

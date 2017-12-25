@@ -30,9 +30,9 @@ public class Action_web extends ActionSupport implements SessionAware{
     private int maxPage;
     private int page;
     private int maxItem;
-    private List<Item> itemList;
     private int itemId;
     private Item item;
+    private List<Item> itemList;
 
     //register params
     private String userName;
@@ -198,6 +198,7 @@ public class Action_web extends ActionSupport implements SessionAware{
     })
     public String Welcome(){
         carouselItems = ItemFactory.getCarouselItem();
+        itemList = ItemFactory.getLatestItem();
         return SUCCESS;
     }
 
@@ -303,15 +304,19 @@ public class Action_web extends ActionSupport implements SessionAware{
 
     //跳转到商品的详细信息页面
     @Action(value = "getItemInfo", results = {
-            @Result(location = "/manage/itemInfo.jsp"),
+            @Result(name="manageInfo", location = "/manage/itemInfo.jsp"),
+            @Result(name="mainInfo", location = "/itemInfo.jsp"),
             @Result(name = "error", location = "/login.jsp")
     })
     public String GetItemInfo(){
-        if(session.get("user") == null)
-            return ERROR;
-
         item = ItemFactory.getItemWithItemId(itemId);
-        return SUCCESS;
+        if(requestType.equals("1")) {
+            if(session.get("user") == null)
+                return ERROR;
+            return "manageInfo";
+        } else{
+            return "mainInfo";
+        }
     }
 
 

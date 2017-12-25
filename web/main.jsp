@@ -131,10 +131,37 @@
 
 
             <!-- 网页右边部分 -->
-            <div class="col-xs-3 main-right">
+            <div class="col-xs-3" id="main-right">
                 <jsp:include page="main_loginInfo.jsp"/>
             </div>
 
+            <%-- 分隔 --%>
+            <div class="row">
+                <div class="col-xs-12 text-center" id="manage-line">
+                    <div class="col-xs-5"><hr></div>
+                    <div class="col-xs-2" style="height: 20px;"><p>最新商品</p></div>
+                    <div class="col-xs-5"><hr></div>
+                </div>
+            </div>
+
+
+            <%--下方商品展示--%>
+            <div class="row">
+                <s:iterator value="itemList" id="item">
+                    <div class="col-xs-3">
+                        <div class="thumbnail items">
+                            <a href="getItemInfo?requestType=2&itemId=<s:property value="#item.itemId"/> "
+                               class="thumbnail main-box">
+                                <img class="main-img" src="<s:property value="#item.itemImg"/>">
+                            </a>
+                            <div class="caption">
+                                <h3>￥<s:property value="#item.price"/></h3>
+                                <p class="text-font"><s:property value="#item.itemName"/> </p>
+                            </div>
+                        </div>
+                    </div>
+                </s:iterator>
+            </div>
 
         </div><!-- row -->
     </div>

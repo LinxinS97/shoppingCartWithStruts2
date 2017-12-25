@@ -135,7 +135,8 @@
                             类型：<s:property value="#item.type"/> &nbsp;&nbsp;
                             库存：<s:property value="#item.stock"/> &nbsp;&nbsp;
                             成交量：<s:property value="#item.completeOrder"/>
-                            <a href="getItemInfo?itemId=<s:property value="#item.itemId"/>" style="float: right;">
+                            <a href="getItemInfo?requestType=1&itemId=<s:property value="#item.itemId"/>"
+                               style="float: right;">
                                 编辑
                             </a>
                             <a class="delete-item" style="float: right; margin-right: 10px"
@@ -213,13 +214,6 @@
     </div>
     <script src="js/jquery-3.2.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
-    <script>
-        $(function () {
-            $("#date").blur(function () {
-                console.log($(this).val());
-            })
-        })
-    </script>
     <script src="js/localJs_main.js"></script>
 </body>
 </html>

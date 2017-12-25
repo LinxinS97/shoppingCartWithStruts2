@@ -15,12 +15,12 @@ public class ItemFactory {
 
 
     public static void main(String[] args){
-        Item items = ItemFactory.getItemWithItemId(4);
+        SearchKeys keys = new SearchKeys();
+        List<Item> itemList = ItemFactory.MeticulousSearch(keys, 0, 8).getList();
 
-        System.out.println(items.getItemName());
-//        for(Item item : items){
-//            System.out.println(item.getItemName());
-//        }
+        for(Item item : itemList){
+            System.out.println(item.getItemName());
+        }
     }
 
     /**
@@ -126,12 +126,26 @@ public class ItemFactory {
         return items;
     }
 
+    /**
+     * 用于查找main.jsp上最新商品的方法，包含8个对象
+     *
+     * @return  items  包含结果集的集合
+     */
+    public static List<Item> getLatestItem(){
+        Session session = HibernateFactory.getSession();
+        Query<Item> q = session.createQuery("from Item i order by completeOrder desc", Item.class).setMaxResults(8);
+        List<Item> items = q.list();
+        session.close();
+
+        return items;
+    }
+
 
     /**
      * 用于返回用商品id查找的唯一商品
      *
      * @param itemId 商品id
-     * @return Item
+     * @return Item  包含单个商品信息的Item对象
      */
     public static Item getItemWithItemId(int itemId){
         Session session = HibernateFactory.getSession();

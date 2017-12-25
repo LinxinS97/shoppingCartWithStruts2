@@ -38,6 +38,15 @@ $(document).ready(function(){
         }
     });
 
+    $(".buy-number").change(function () {
+        let $this = $(this);
+        if($this.val() > parseInt($this.attr("stock"))){
+            $this.val($this.attr("stock"));
+        } else if($this.val() < 0){
+            $this.val(0);
+        }
+    });
+
     $.ajax({
         type:"get",
         url:"ifLogin",
