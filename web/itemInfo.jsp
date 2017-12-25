@@ -65,7 +65,7 @@
                     </div>
                     <div class="col-xs-3">
                         <h3>
-                            <input class="form-control buy-number" type="number" id="item-num"
+                            <input class="form-control buy-number" type="number" id="item-num" value="1"
                                    stock="<s:property value="item.stock"/>">
                             <span class="h6 help-block">
                                 （库存：<s:property value="item.stock"/>）
@@ -76,12 +76,14 @@
                 <br>
                 <div class="row">
                     <div class="col-xs-2">
-                        <button class="btn btn-default">
+                        <a href="getItemInfo?requestType=3&itemId=<s:property value="item.itemId"/> "
+                           class="btn btn-default operate operate-purchase">
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;购买&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        </button>
+                        </a>
                     </div>
                     <div class="col-xs-2">
-                        <button class="btn btn-warning">
+                        <button class="btn btn-warning operate operate-cart" id="add-cart"
+                                itemId="<s:property value="item.itemId"/>">
                             加入购物车
                         </button>
                     </div>
@@ -103,14 +105,16 @@
                     <img class="media-object img-thumbnail main-img" src="source/pic/IMG_2189.JPG">
                 </div>
                 <div class="media-body">
-                    <h4 class="media-heading">用户A</h4>
-                    <p>这是第一条评论hahahahahahah<span style="float: right">2010-10-10</span></p>
+                    <h4 class="media-heading" style="margin-bottom: 10px;">用户A</h4>
+                    <p>这是第一条评论hahahahahahah<span class="help-block" style="float: right">2010-10-10</span></p>
                 </div>
             </div>
         </div>
+        <jsp:include page="modal/modal.jsp"/>
     </div>
 <script src="js/jquery-3.2.1.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/localJs_main.js"></script>
+<script src="js/localJs_login.js"></script>
 </body>
 </html>

@@ -47,6 +47,42 @@ $(document).ready(function(){
         }
     });
 
+    $(".operate").mousedown(function () {
+        let flag = false;
+        let $this = $(this);
+        $.ajax({
+            type:"get",
+            url:"ifLogin",
+            data:{},
+            success:function (data) {
+                if(data.flag === "true"){
+                    if($this.hasClass("operate-purchase")){
+                        flag = true;
+                    } else{
+                        $.ajax({
+                            type:"get",
+                            url:"operateCart",
+                            data:{
+                                itemId:$this.attr("itemId"),
+                                num:$("#item-num").val()
+                            },
+                            success:function (data) {
+                                if(data.flag === "true")
+                                    $("#myModal_itemExist").modal('show');
+                                else
+                                    $("#myModal_addSuccess").modal('show');
+                            }
+                        });
+                    }
+                }
+                else{
+                    $("#myModal_login").modal('show');
+                }
+            }
+        });
+        return flag;
+    });
+
     $.ajax({
         type:"get",
         url:"ifLogin",

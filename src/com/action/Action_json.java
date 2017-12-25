@@ -1,9 +1,11 @@
 package com.action;
 
 import com.hibernate.AlterFactory;
+import com.hibernate.CartFactory;
 import com.hibernate.ItemFactory;
 import com.hibernate.UserFactory;
 import com.opensymphony.xwork2.ActionSupport;
+import com.pojo.Cart;
 import com.pojo.Item;
 import com.pojo.ItemPK;
 import com.pojo.User;
@@ -24,6 +26,7 @@ public class Action_json extends ActionSupport implements SessionAware{
     private String options;
     private int itemId;
     private String flag;
+    private int num;
 
 
 
@@ -49,6 +52,10 @@ public class Action_json extends ActionSupport implements SessionAware{
 
     public String getFlag() {
         return flag;
+    }
+
+    public void setNum(int num) {
+        this.num = num;
     }
 
     @Override
@@ -94,6 +101,8 @@ public class Action_json extends ActionSupport implements SessionAware{
         return SUCCESS;
     }
 
+
+
     //Return SUCCESS if 'User' info has existed in SESSION.
     @Action(value = "ifLogin", results = {
             @Result(type = "json")
@@ -110,13 +119,8 @@ public class Action_json extends ActionSupport implements SessionAware{
         return SUCCESS;
     }
 
-    //Put ITEM info into user's SHOPPING CART then return SUCCESS.
-    @Action(value = "addCart", results = {
-            @Result(type = "json")
-    })
-    public String AddCart(){
-        return SUCCESS;
-    }
+
+
 
     //Delete ITEM from user's SHOPPING CART then return SUCCESS.
     @Action(value = "deleteCart", results = {
@@ -125,6 +129,27 @@ public class Action_json extends ActionSupport implements SessionAware{
     public String DeleteCart(){
         return SUCCESS;
     }
+
+
+
+
+    @Action(value = "operateCart", results = {
+            @Result(type = "json")
+    })
+    public String OperateCart(){
+        User user = (User)session.get("user");
+        flag = CartFactory.IfItemExist(user.getUserId(), itemId) + "";
+        if(flag.equals("false")){
+            Cart cart = new Cart();
+            cart.setItemId(itemId);
+            cart.setUserId(user.getUserId());
+            cart.setNum(num);
+            AlterFactory.add(cart);
+        }
+        return SUCCESS;
+    }
+
+
 
     //Delete ITEM from Table "item" then return SUCCESS.
     @Action(value = "deleteItem", results = {

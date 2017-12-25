@@ -34,6 +34,7 @@ $(document).ready(function(){
 	//用户名或密码为空则不允许登录
 	$("#bt-submit").click(function(){
 		var flag = false;
+		let $this = $(this);
 		if($("#tel").val() === "" && !$("#tel-div").hasClass("has-error")){
 			$("#tel-div").addClass("has-error");
 			$("#tel-span").attr("style","display:block");
@@ -59,11 +60,14 @@ $(document).ready(function(){
 				},
 				success:function(data){
 					if(data.flag === "success"){
-
-					    if(data.options === "seller")
-					        location.href = "Management?requestType=1";
-                        else
-                            location.href = "Welcome";
+					    if($this.hasClass("modal-button")){
+                            location.reload();
+                        }else{
+                            if(data.options === "seller")
+                                location.href = "Management?requestType=1";
+                            else
+                                location.href = "Welcome";
+                        }
 
 					}else if(data.flag === "pswError"){
 						$("#psw-div").attr("class","form-group has-error has-feedback");

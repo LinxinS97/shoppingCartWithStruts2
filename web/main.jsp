@@ -126,7 +126,6 @@
                     <span class="sr-only">Next</span>
                 </a>
                 </div><!-- carousel-example-generic -->
-
             </div>
 
 
