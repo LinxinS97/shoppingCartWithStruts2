@@ -2,18 +2,18 @@ package com.pojo;
 
 import java.util.List;
 
-public class Result {
+public class Result<E> {
     private int maxPage;
     private int maxItem;
-    private List<Item> list;
+    private List<E> list;
 
-    public Result(int maxPage, int maxItem, List<Item> list) {
+    public Result(int maxPage, int maxItem, List<E> list) {
         this.maxPage = maxPage;
         this.maxItem = maxItem;
         this.list = list;
     }
 
-    public Result(int maxPage, List<Item> list) {
+    public Result(int maxPage, List<E> list) {
         this.maxPage = maxPage;
         this.list = list;
     }
@@ -26,11 +26,11 @@ public class Result {
         this.maxPage = maxPage;
     }
 
-    public List<Item> getList() {
+    public List<E> getList() {
         return list;
     }
 
-    public void setList(List<Item> list) {
+    public void setList(List<E> list) {
         this.list = list;
     }
 

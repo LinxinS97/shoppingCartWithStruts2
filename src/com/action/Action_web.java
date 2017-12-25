@@ -15,7 +15,6 @@ import org.apache.struts2.interceptor.SessionAware;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -65,6 +64,9 @@ public class Action_web extends ActionSupport implements SessionAware{
     //main.jsp param
     private List<Item> carouselItems;
 
+    //user search param
+    private String location;
+    private String isTag;
 
 
     @Override
@@ -188,6 +190,10 @@ public class Action_web extends ActionSupport implements SessionAware{
         return carouselItems;
     }
 
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
 
 
 
@@ -253,7 +259,7 @@ public class Action_web extends ActionSupport implements SessionAware{
             SearchKeys keys = new SearchKeys();
             keys.setSearch_userId(user.getUserId());
             //调用查询方法
-            com.pojo.Result res = ItemFactory.MeticulousSearch(
+            com.pojo.Result<Item> res = ItemFactory.MeticulousSearch(
                     keys, firstIndex, max
             );
             maxPage = res.getMaxPage();
@@ -287,7 +293,7 @@ public class Action_web extends ActionSupport implements SessionAware{
                 session.put("searchKeys", keys);
             }
 
-            com.pojo.Result res = ItemFactory.MeticulousSearch(
+            com.pojo.Result<Item> res = ItemFactory.MeticulousSearch(
                     keys, firstIndex, max
             );
             maxPage = res.getMaxPage();
@@ -298,6 +304,59 @@ public class Action_web extends ActionSupport implements SessionAware{
             session.put("page", page);
             System.out.println("maxPage = " + maxPage);
         }
+        return SUCCESS;
+    }
+
+    @Action(value = "getSearchResult", results = {
+            @Result(location = "/search_result.jsp")
+    })
+    public String GetSearchResult(){
+        //每页显示最大商品数
+        int max = 5;
+
+        if(isTag != null){
+            session.remove("page");
+            page = 1;
+        }
+        //page初始化
+        if(page == 0 && session.get("page") == null)
+            page = 1;
+        else if(session.get("page") != null && page == 0)
+            page = (int)session.get("page");
+        System.out.println("page = " + page);
+
+        //向前
+        if(previous == 1 && page != 0){
+            page = (int)session.get("page");
+            page -= 1;
+            System.out.println("page = " + page);
+        }
+
+        //向后
+        if(next == 1){
+            page = (int)session.get("page");
+            page += 1;
+            System.out.println("page = " + page);
+        }
+
+        //第一个物品的索引
+        int firstIndex = page * max - max;
+        SearchKeys keys;
+        if(itemName != null || type != null){
+            keys = new SearchKeys();
+            keys.setSearch_type(type);
+            keys.setSearch_name(itemName);
+            session.put("searchKeys", keys);
+        }else{
+            keys = (SearchKeys)session.get("searchKeys");
+        }
+        com.pojo.Result<Item> res = ItemFactory.getSearchResult(location, keys, firstIndex, max);
+
+        maxPage = res.getMaxPage();
+        itemList = res.getList();
+
+        session.put("location", location);
+        session.put("page", page);
         return SUCCESS;
     }
 

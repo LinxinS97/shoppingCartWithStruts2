@@ -27,6 +27,7 @@ public class Action_json extends ActionSupport implements SessionAware{
     private int itemId;
     private String flag;
     private int num;
+    private String location;
 
 
 
@@ -56,6 +57,10 @@ public class Action_json extends ActionSupport implements SessionAware{
 
     public void setNum(int num) {
         this.num = num;
+    }
+
+    public String getLocation() {
+        return location;
     }
 
     @Override
@@ -164,6 +169,15 @@ public class Action_json extends ActionSupport implements SessionAware{
         File itemImg = new File("/Users/elpis/FilesForShoppingCart_Struts2/itemsImgs/" + imgName[2]);
         itemImg.delete();
         AlterFactory.delete(item);
+        return SUCCESS;
+    }
+
+
+    @Action(value = "getLocation", results = {
+            @Result(type = "json")
+    })
+    public String GetLocation(){
+        location = (String) session.get("location");
         return SUCCESS;
     }
 

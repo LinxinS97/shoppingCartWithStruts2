@@ -99,6 +99,28 @@
 
 
 
+/*search_result.jsp*/
+#result-container .media-box{
+    height:         100px;
+    width:          800px;
+    padding:        0 10px 0 10px;
+    text-align:     center;
+    display:        table-cell;
+    vertical-align: middle;
+}
+
+#result-container .media{
+    padding:            10px;
+    border-top:         1px ridge #f1f1f1;
+    margin:             0;
+    background-color:   #FFFFFF;
+}
+
+#result-container .media-body{
+    padding-top:    10px
+}
+
+
 
 
 

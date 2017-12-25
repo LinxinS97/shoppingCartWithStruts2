@@ -139,6 +139,7 @@
                                style="float: right;">
                                 编辑
                             </a>
+
                             <a class="delete-item" style="float: right; margin-right: 10px"
                                role="button" itemId="<s:property value="#item.itemId"/> ">
                                 删除

@@ -29,12 +29,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<jsp:include page="nav_shoppingCart.jsp"/>
 				</li>
 			</ul>
-			<form class="navbar-form navbar-left" action="GetSearchResult"
+			<form class="navbar-form navbar-left" action="getSearchResult"
 				method="get">
 				<div class="form-group">
-					<input type="text" value="searchKey" name="type"
-						style="display:none"> <input type="text"
-						class="form-control" placeholder="淘淘口袋" value="" name="key">
+					<input type="text" value="order" name="location"
+						style="display:none">
+					<input type="text" class="form-control" placeholder="淘淘口袋" value="" name="itemName">
 				</div>
 				<button type="submit" class="btn btn-default">搜索</button>
 			</form>
