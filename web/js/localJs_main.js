@@ -1,4 +1,14 @@
 $(document).ready(function(){
+    $.ajax({
+        type:"get",
+        url:"ifLogin",
+        data:{},
+        success:function(data){
+            if(data.flag === "true"){
+                $("#loginCenter").attr("style","margin-bottom:55px");
+            }
+        }
+    });
 
     $("#itemPrice").change(function(){
        if($(this).val() < 0)
@@ -83,27 +93,4 @@ $(document).ready(function(){
         return flag;
     });
 
-    $.ajax({
-        type:"get",
-        url:"ifLogin",
-        data:{},
-        success:function(data){
-            if(data.flag === "true"){
-                $("#nav_loginInfo_unLogin").attr("style","display:none");
-                $("#nav_loginInfo_isLogin").attr("style","display:block");
-                $("#info_unLogin").attr("style", "display:none");
-                $("#info_isLogin").attr("style", "display:block");
-                $("#tb_isLogin").attr("style","display:");
-                $("#tb_unLogin").attr("style","display:none");
-                $("#loginCenter").attr("style","margin-bottom:55px");
-            }else{
-                $("#info_unLogin").attr("style", "display:block");
-                $("#info_isLogin").attr("style", "display:none");
-                $("#nav_loginInfo_unLogin").attr("style","display:block");
-                $("#nav_loginInfo_isLogin").attr("style","display:none");
-                $("#tb_isLogin").attr("style","display:none");
-                $("#tb_unLogin").attr("style","display:");
-            }
-        }
-    })
 });
