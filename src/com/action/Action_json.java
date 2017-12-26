@@ -16,6 +16,7 @@ import org.apache.struts2.interceptor.SessionAware;
 
 
 import java.io.File;
+import java.util.List;
 import java.util.Map;
 
 @ParentPackage(value = "json-default")
@@ -28,6 +29,11 @@ public class Action_json extends ActionSupport implements SessionAware{
     private String flag;
     private int num;
     private String location;
+
+    //navBarInfo
+    private List<Item> navBar_cart;
+    private int cartSize;
+
 
 
 
@@ -96,7 +102,14 @@ public class Action_json extends ActionSupport implements SessionAware{
         if(user != null){
             if(user.getPassword().equals(psw)){
                 flag = "success";
+
+                com.pojo.Result<Item> res = CartFactory.GetUserCart(user.getUserId(), 0, 3);
+                navBar_cart = res.getList();
+                cartSize = res.getMaxItem();
+
                 session.put("user", user);
+                session.put("navBar_cart", navBar_cart);
+                session.put("cartSize", cartSize);
             } else{
                 flag = "pswError";
             }
@@ -132,6 +145,18 @@ public class Action_json extends ActionSupport implements SessionAware{
             @Result(type = "json")
     })
     public String DeleteCart(){
+        Cart cart = new Cart();
+        User user = (User)session.get("user");
+        cart.setUserId(user.getUserId());
+        cart.setItemId(itemId);
+        AlterFactory.delete(cart);
+        flag = "true";
+        com.pojo.Result<Item> res = CartFactory.GetUserCart(user.getUserId(), 0, 3);
+        navBar_cart = res.getList();
+        cartSize = res.getMaxItem();
+
+        session.put("navBar_cart", navBar_cart);
+        session.put("cartSize", cartSize);
         return SUCCESS;
     }
 
@@ -150,6 +175,13 @@ public class Action_json extends ActionSupport implements SessionAware{
             cart.setUserId(user.getUserId());
             cart.setNum(num);
             AlterFactory.add(cart);
+
+            com.pojo.Result<Item> res = CartFactory.GetUserCart(user.getUserId(), 0, 3);
+            navBar_cart = res.getList();
+            cartSize = res.getMaxItem();
+
+            session.put("navBar_cart", navBar_cart);
+            session.put("cartSize", cartSize);
         }
         return SUCCESS;
     }
@@ -169,6 +201,7 @@ public class Action_json extends ActionSupport implements SessionAware{
         File itemImg = new File("/Users/elpis/FilesForShoppingCart_Struts2/itemsImgs/" + imgName[2]);
         itemImg.delete();
         AlterFactory.delete(item);
+        CartFactory.ChangeItemDisabled(itemId);
         return SUCCESS;
     }
 

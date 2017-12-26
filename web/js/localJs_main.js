@@ -1,11 +1,12 @@
 $(document).ready(function(){
+
     $.ajax({
         type:"get",
         url:"ifLogin",
         data:{},
         success:function(data){
-            if(data.flag === "true"){
-                $("#loginCenter").attr("style","margin-bottom:55px");
+            if(data.flag !== "true"){
+                $("#loginCenter").attr("style","margin-bottom:92px");
             }
         }
     });
@@ -92,5 +93,19 @@ $(document).ready(function(){
         });
         return flag;
     });
+
+    $(".delete-cart").click(function () {
+        $.ajax({
+            type:"get",
+            url:"deleteCart",
+            data:{
+                itemId:$(this).attr("itemId")
+            },
+            success:function (data) {
+                if(data.flag === "true")
+                    location.reload();
+            }
+        })
+    })
 
 });

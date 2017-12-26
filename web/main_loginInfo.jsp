@@ -8,8 +8,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 
-        <center style="margin-bottom: 68px" id="loginCenter">
-            <s:if test="session.user == null">
+        <center style="margin-bottom: 55px" id="loginCenter">
+            <s:if test="#session.user == null">
             <div id="info_unLogin">
                 <img src="source/pic/IMG_2189.JPG" alt="Head"
                      class="img-circle imgPosition" height="79px" width="79px">
@@ -31,7 +31,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 
 	<br>
-    <s:if test="session.user == null">
+    <s:if test="#session.user == null">
         <table class="table" id="tb_unLogin">
             <tr>
                 <td align="center" style="border-top: 0px"><a href="login.jsp" class="btn btn-primary btn-lg btn-block">马上登录</a></td>

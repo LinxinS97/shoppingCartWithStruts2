@@ -1,11 +1,10 @@
 package com.action;
 
 import com.hibernate.AlterFactory;
+import com.hibernate.CartFactory;
 import com.hibernate.ItemFactory;
 import com.opensymphony.xwork2.ActionSupport;
-import com.pojo.Item;
-import com.pojo.SearchKeys;
-import com.pojo.User;
+import com.pojo.*;
 import org.apache.commons.io.FileUtils;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.InterceptorRef;
@@ -15,6 +14,7 @@ import org.apache.struts2.interceptor.SessionAware;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -32,6 +32,7 @@ public class Action_web extends ActionSupport implements SessionAware{
     private int itemId;
     private Item item;
     private List<Item> itemList;
+    private List<CartItem> cartList;
 
     //register params
     private String userName;
@@ -72,6 +73,10 @@ public class Action_web extends ActionSupport implements SessionAware{
     @Override
     public void setSession(Map<String, Object> map) {
         session = map;
+    }
+
+    public List<CartItem> getCartList() {
+        return cartList;
     }
 
     public void setItemId(int itemId) {
@@ -194,6 +199,11 @@ public class Action_web extends ActionSupport implements SessionAware{
         this.location = location;
     }
 
+    public void setIsTag(String isTag) {
+        this.isTag = isTag;
+    }
+
+
 
 
 
@@ -307,6 +317,8 @@ public class Action_web extends ActionSupport implements SessionAware{
         return SUCCESS;
     }
 
+
+
     @Action(value = "getSearchResult", results = {
             @Result(location = "/search_result.jsp")
     })
@@ -357,6 +369,26 @@ public class Action_web extends ActionSupport implements SessionAware{
 
         session.put("location", location);
         session.put("page", page);
+        return SUCCESS;
+    }
+
+
+    //显示购物车的商品
+    @Action(value = "getCartItem", results = {
+            @Result(name = "error", location = "/login.jsp"),
+            @Result(location = "/user_cart.jsp")
+    })
+    public String GetCartItem(){
+        if(session.get("user") == null)
+            return ERROR;
+        User user = (User)session.get("user");
+        com.pojo.Result<List> res = CartFactory.GetUserCartList(user.getUserId(), 0, 10000);
+        cartList = new ArrayList<>();
+        for(List i : res.getList()){
+            cartList.add(new CartItem((Item)i.get(0), (int)i.get(1), (String)i.get(2), (int)i.get(3)));
+        }
+        maxItem = res.getMaxItem();
+
         return SUCCESS;
     }
 

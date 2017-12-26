@@ -1,7 +1,9 @@
 package com.hibernate;
 
+import com.pojo.Cart;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+
 
 public class AlterFactory {
 

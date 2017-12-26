@@ -12,7 +12,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <title>My JSP 'userInfo.jsp' starting page</title>
     </head>
 
-    <s:if test="session.user == null">
+    <s:if test="#session.user == null">
         <ul class="nav navbar-nav navbar-right" id="nav_loginInfo_unLogin">
             <li><a href="login.jsp">亲，请登录</a></li>
             <li><a href="register/register_1.jsp">马上注册</a></li>

@@ -1,7 +1,4 @@
 $(document).ready(function(){
-	$("#nav-mypocket").attr("style","display:none");
-	$("#nav-myfavourite").attr("style","display:none");
-	$("#my-nav-dropdown").attr("style","display:none");
 	
 	//判断用户名是否为空
 	$("#tel").blur(function(){

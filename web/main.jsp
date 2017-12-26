@@ -67,7 +67,7 @@
                         <span class="glyphicon glyphicon-education" aria-hidden="true"></span>
                         &nbsp;&nbsp;学习
                     </a>
-                    <a href="getSearchResult?type=卡券&location=order" class="list-group-item">
+                    <a href="getSearchResult?type=卡券" class="list-group-item">
                         <span class="glyphicon glyphicon-usd" aria-hidden="true"></span>
                         &nbsp;&nbsp;卡券
                     </a>

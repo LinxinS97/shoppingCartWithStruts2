@@ -34,11 +34,10 @@
         <ul class="nav nav-tabs" role="tablist" style="padding: 0 268px 0 268px; background-color: #ddedf6">
             <li role="presentation" class="order">
 
-                <a href="getSearchResult?isTag=true&location=order">销量</a>
+                <a href="getSearchResult?isTag=1&location=order">销量</a>
             </li>
             <li role="presentation" class="popular">
-
-                <a href="getSearchResult?isTag=true&location=popular">人气</a>
+                <a href="getSearchResult?isTag=1&location=popular">人气</a>
             </li>
             <li class="dropdown price">
                 <a class="dropdown-toggle"
@@ -50,10 +49,10 @@
                 <ul class="dropdown-menu">
                     <li class="price-li">
 
-                        <a href="getSearchResult?isTag=true&location=price">价格从低到高</a></li>
+                        <a href="getSearchResult?isTag=1&location=price">价格从低到高</a></li>
                     <li class="price-li-d">
 
-                        <a href="getSearchResult?isTag=true&location=price_desc">价格从高到低</a></li>
+                        <a href="getSearchResult?isTag=1&location=price_desc">价格从高到低</a></li>
                 </ul>
             </li>
         </ul>
