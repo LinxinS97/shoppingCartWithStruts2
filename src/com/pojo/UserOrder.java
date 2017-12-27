@@ -1,20 +1,32 @@
 package com.pojo;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.sql.Timestamp;
 
 @Entity
-@IdClass(OrderPK.class)
-public class Order {
+public class UserOrder {
+    private BigInteger orderId;
     private int itemId;
     private int userId;
     private Timestamp startTime;
     private Timestamp endTime;
-    private String isDelivery;
-    private String isGet;
-    private String isComment;
+    private boolean isDelivery;
+    private boolean isGet;
+    private boolean isComment;
+
 
     @Id
+    @Column(name = "orderId")
+    public BigInteger getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(BigInteger orderId) {
+        this.orderId = orderId;
+    }
+
     @Column(name = "itemId")
     public int getItemId() {
         return itemId;
@@ -24,7 +36,6 @@ public class Order {
         this.itemId = itemId;
     }
 
-    @Id
     @Column(name = "userId")
     public int getUserId() {
         return userId;
@@ -55,33 +66,33 @@ public class Order {
     }
 
     @Basic
-    @Column(name = "isDelivery", insertable = false)
-    public String getIsDelivery() {
+    @Column(name = "isDelivery")
+    public boolean isDelivery() {
         return isDelivery;
     }
 
-    public void setIsDelivery(String isDelivery) {
-        this.isDelivery = isDelivery;
+    public void setDelivery(boolean delivery) {
+        isDelivery = delivery;
     }
 
     @Basic
-    @Column(name = "isGet", insertable = false)
-    public String getIsGet() {
+    @Column(name = "isGet")
+    public boolean isGet() {
         return isGet;
     }
 
-    public void setIsGet(String isGet) {
-        this.isGet = isGet;
+    public void setGet(boolean get) {
+        isGet = get;
     }
 
     @Basic
-    @Column(name = "isComment", insertable = false)
-    public String getIsComment() {
+    @Column(name = "isComment")
+    public boolean isComment() {
         return isComment;
     }
 
-    public void setIsComment(String isComment) {
-        this.isComment = isComment;
+    public void setComment(boolean comment) {
+        isComment = comment;
     }
 
     @Override
@@ -89,15 +100,15 @@ public class Order {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Order order = (Order) o;
+        UserOrder userOrder = (UserOrder) o;
 
-        if (itemId != order.itemId) return false;
-        if (userId != order.userId) return false;
-        if (startTime != null ? !startTime.equals(order.startTime) : order.startTime != null) return false;
-        if (endTime != null ? !endTime.equals(order.endTime) : order.endTime != null) return false;
-        if (isDelivery != null ? !isDelivery.equals(order.isDelivery) : order.isDelivery != null) return false;
-        if (isGet != null ? !isGet.equals(order.isGet) : order.isGet != null) return false;
-        if (isComment != null ? !isComment.equals(order.isComment) : order.isComment != null) return false;
+        if (itemId != userOrder.itemId) return false;
+        if (userId != userOrder.userId) return false;
+        if (isDelivery != userOrder.isDelivery) return false;
+        if (isGet != userOrder.isGet) return false;
+        if (isComment != userOrder.isComment) return false;
+        if (startTime != null ? !startTime.equals(userOrder.startTime) : userOrder.startTime != null) return false;
+        if (endTime != null ? !endTime.equals(userOrder.endTime) : userOrder.endTime != null) return false;
 
         return true;
     }
@@ -108,9 +119,10 @@ public class Order {
         result = 31 * result + userId;
         result = 31 * result + (startTime != null ? startTime.hashCode() : 0);
         result = 31 * result + (endTime != null ? endTime.hashCode() : 0);
-        result = 31 * result + (isDelivery != null ? isDelivery.hashCode() : 0);
-        result = 31 * result + (isGet != null ? isGet.hashCode() : 0);
-        result = 31 * result + (isComment != null ? isComment.hashCode() : 0);
+        result = 31 * result + (isDelivery ? 1 : 0);
+        result = 31 * result + (isGet ? 1 : 0);
+        result = 31 * result + (isComment ? 1 : 0);
         return result;
     }
+
 }

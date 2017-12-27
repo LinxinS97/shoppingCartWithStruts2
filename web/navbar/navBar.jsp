@@ -27,6 +27,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 				<!-- 购物车下拉菜单jsp -->
                 <s:if test="#session.user != null">
+
                 <li id="nav-mypocket"><a href="myInfo.jsp">我的口袋</a></li>
 				<li class="dropdown" id="my-nav-dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">

@@ -20,7 +20,7 @@
         <mapping class="com.pojo.Item"/>
         <mapping class="com.pojo.User"/>
         <mapping class="com.pojo.UserComment"/>
-        <mapping class="com.pojo.Order"/>
+        <mapping class="com.pojo.UserOrder"/>
 
         <!-- DB schema will be updated if needed -->
         <!-- <property name="hbm2ddl.auto">update</property> -->

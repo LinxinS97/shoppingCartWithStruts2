@@ -20,11 +20,11 @@
     <a class="list-group-item">
         <div class="media">
             <div class="media-left manage-box" style="width: 10000px">
-                <img class="media-object img-rounded main-img" src="${user.userImg}">
+                <img class="media-object img-rounded main-img" src="${user.userImg }">
             </div>
             <div class="media-body">
-                <h5 class="media-heading">你好，${user.userName}</h5>
-                <h6>订单数量：123</h6>
+                <h5 class="media-heading">你好，${user.userName }</h5>
+                <h6>订单数量：${sessionScope.orderCount }</h6>
                 <h6>上架商品数：${maxItem } </h6>
             </div>
         </div>

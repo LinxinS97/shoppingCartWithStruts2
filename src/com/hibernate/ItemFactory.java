@@ -42,8 +42,8 @@ public class ItemFactory {
         CriteriaQuery<Item> criteria = builder.createQuery(Item.class);
         //设置查询根对象
         Root<Item> root = criteria.from(Item.class);
-        //初始化限制条件
 
+        //初始化限制条件
         //userId
         Predicate ItemUserIdRestriction = builder.and();
         //商品名称

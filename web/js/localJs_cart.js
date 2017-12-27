@@ -104,11 +104,29 @@ $(function () {
         let $sumPC = $("#sum-price-conf");
         let $sum = $("#sum-num");
         let $sumC = $("#sum-num-conf");
+
         if($this.hasClass("purchase-btn-disable"))
             return false;
         else{
             $sumPC.html($sumP.html());
             $sumC.html($sum.html());
         }
+    });
+
+    $("#pur-c").click(function () {
+        let $checkboxes = $(".item-is-check:checked");
+        let idList = "";
+        $checkboxes.each(function () {
+            idList += $(this).attr("itemId")+",";
+        });
+        $.ajax({
+            type:"get",
+            url:"createOrder",
+            data:{itemIdList:idList},
+            success:function () {
+                location.href = "Welcome";
+            }
+        });
+        console.log(idList);
     })
 });

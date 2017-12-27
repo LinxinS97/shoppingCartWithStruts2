@@ -4,12 +4,10 @@ import com.pojo.User;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
+import java.util.Date;
+
 public class UserFactory {
 
-    public static void main(String[] args){
-        User user = UserFactory.findUser(-1, "13502090752");
-        System.out.println(user.getUserId());
-    }
 
 
     /**

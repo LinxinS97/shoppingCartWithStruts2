@@ -78,8 +78,8 @@
                     <div class="row">
                         <div class="col-xs-4">
                             <div class="form-group">
-                                <label for="order">成交数量：</label>
-                                <input class="form-control" type="number" name="search_order" value="0" id="order"
+                                <label for="userOrder">成交数量：</label>
+                                <input class="form-control" type="number" name="search_order" value="0" id="userOrder"
                                        style="width: 25%;">
                                 &nbsp;到
                                 <input class="form-control" type="number" name="search_order" value="0"

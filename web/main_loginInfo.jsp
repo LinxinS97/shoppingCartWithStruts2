@@ -47,8 +47,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <tr>
                 <td align="center" style="border-top: 0px"><span
                         class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></td>
-                <td style="border-top: 0px"><font size=2><a
-                        href="getCartItem">待付款</a></font></td>
+                <td style="border-top: 0px"><font size=2>待付款</font></td>
                 <!-- 徽章 -->
                 <td style="border-top: 0px"><span class="badge"><s:property value="#session.cartSize"/> </span></td>
             </tr>
@@ -56,7 +55,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <td align="center" style="border-top: 0px"><span
                         class="glyphicon glyphicon-yen" aria-hidden="true"></span></td>
                 <td style="border-top: 0px"><font size=2>待发货</font></td>
-                <td style="border-top: 0px"><span class="badge">0</span></td>
+                <td style="border-top: 0px"><span class="badge">${sessionScope.orderCount } </span></td>
             </tr>
             <tr>
                 <td align="center" style="border-top: 0px"><span

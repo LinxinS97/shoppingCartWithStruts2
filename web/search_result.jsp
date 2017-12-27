@@ -27,7 +27,7 @@
     <div class="jumbotron" style="background-color:  #fcf3cf">
         <div class="col-xs-4 col-xs-offset-1">
             <h2>搜索结果</h2>
-            <p>你想要<span class="h6">和不想要的</span>的<span class="h6">大概</span>都有</p>
+            <p>你想要的<span class="h6">大概</span>都有</p>
         </div>
     </div>
     <div class="col-xs-12" style="margin-top: 4.5%; padding: 0">

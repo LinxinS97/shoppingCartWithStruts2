@@ -5,10 +5,7 @@ import com.hibernate.CartFactory;
 import com.hibernate.ItemFactory;
 import com.hibernate.UserFactory;
 import com.opensymphony.xwork2.ActionSupport;
-import com.pojo.Cart;
-import com.pojo.Item;
-import com.pojo.ItemPK;
-import com.pojo.User;
+import com.pojo.*;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
@@ -16,6 +13,9 @@ import org.apache.struts2.interceptor.SessionAware;
 
 
 import java.io.File;
+import java.math.BigInteger;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -33,6 +33,9 @@ public class Action_json extends ActionSupport implements SessionAware{
     //navBarInfo
     private List<Item> navBar_cart;
     private int cartSize;
+
+    //createOrder
+    private String itemIdList;
 
 
 
@@ -67,6 +70,10 @@ public class Action_json extends ActionSupport implements SessionAware{
 
     public String getLocation() {
         return location;
+    }
+
+    public void setItemIdList(String itemIdList) {
+        this.itemIdList = itemIdList;
     }
 
     @Override
@@ -213,10 +220,40 @@ public class Action_json extends ActionSupport implements SessionAware{
     }
 
 
-    @Action(value = "purchase", results = {
+    @Action(value = "createOrder", results = {
             @Result(type = "json")
     })
-    public String Purchase(){
+    public String CreateOrder(){
+        User user = (User)session.get("user");
+        Cart cart;
+        UserOrder o;
+        String[] itemIdList = this.itemIdList.split(",");
+        System.out.println(itemIdList.length);
+        java.util.Date date = new java.util.Date();              //获取一个Date对象
+        Timestamp timeStamp = new Timestamp(date.getTime());     //将日期时间转换为数据库中的timestamp类型
+        for(String itemId : itemIdList){
+            int id = Integer.parseInt(itemId);
+            cart = new Cart();
+            o = new UserOrder();
+            cart.setItemId(id);
+            cart.setUserId(user.getUserId());
+            AlterFactory.delete(cart);
+
+            Date d = new Date();
+
+            o.setOrderId(new BigInteger(d.getTime()+""+user.getUserId()));
+            o.setUserId(user.getUserId());
+            o.setStartTime(timeStamp);
+            o.setItemId(id);
+            o.setDelivery(true);
+            AlterFactory.add(o);
+        }
+        com.pojo.Result<Item> res = CartFactory.GetUserCart(user.getUserId(), 0, 3);
+        navBar_cart = res.getList();
+        cartSize = res.getMaxItem();
+
+        session.put("navBar_cart", navBar_cart);
+        session.put("cartSize", cartSize);
         return SUCCESS;
     }
 

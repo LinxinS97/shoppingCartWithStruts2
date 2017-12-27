@@ -3,6 +3,7 @@ package com.action;
 import com.hibernate.AlterFactory;
 import com.hibernate.CartFactory;
 import com.hibernate.ItemFactory;
+import com.hibernate.OrderFactory;
 import com.opensymphony.xwork2.ActionSupport;
 import com.pojo.*;
 import org.apache.commons.io.FileUtils;
@@ -64,6 +65,7 @@ public class Action_web extends ActionSupport implements SessionAware{
 
     //main.jsp param
     private List<Item> carouselItems;
+    private int        orderCount;
 
     //user search param
     private String location;
@@ -73,6 +75,10 @@ public class Action_web extends ActionSupport implements SessionAware{
     @Override
     public void setSession(Map<String, Object> map) {
         session = map;
+    }
+
+    public int getOrderCount() {
+        return orderCount;
     }
 
     public List<CartItem> getCartList() {
@@ -215,6 +221,11 @@ public class Action_web extends ActionSupport implements SessionAware{
     public String Welcome(){
         carouselItems = ItemFactory.getCarouselItem();
         itemList = ItemFactory.getLatestItem();
+        if(session.get("user") != null) {
+            User user = (User) session.get("user");
+            orderCount = OrderFactory.getSumofUserOrder(user.getUserId());
+            session.put("orderCount", orderCount);
+        }
         return SUCCESS;
     }
 
@@ -237,6 +248,8 @@ public class Action_web extends ActionSupport implements SessionAware{
         if(session.get("user") == null)
             return ERROR;
         User user = (User)session.get("user");
+        orderCount = OrderFactory.getSumofUserOrder(user.getUserId());
+        session.put("orderCount", orderCount);
         //每页显示最大商品数
         int max = 6;
 

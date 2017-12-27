@@ -118,7 +118,9 @@
                             </div>
                             <div class="media-body">
                                 <h5 class="media-heading">
-                                    <s:property value="#item.item.itemName"/>
+                                    <a href="getItemInfo?requestType=2&itemId=<s:property value="#item.item.itemId"/>">
+                                        <s:property value="#item.item.itemName"/>
+                                    </a>
                                 </h5>
                             </div>
                         </div>
@@ -149,9 +151,9 @@
                                 <img class="media-object main-img" src="<s:property value="#item.item.itemImg"/>">
                             </div>
                             <div class="media-body">
-                                <h5 class="media-heading">
+                                <a href="getItemInfo?requestType=2&itemId=<s:property value="#item.item.itemId"/>">
                                     <s:property value="#item.item.itemName"/>
-                                </h5>
+                                </a>
                             </div>
                         </div>
                     </div>
