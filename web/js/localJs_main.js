@@ -80,7 +80,7 @@ $(document).ready(function(){
                             success:function (data) {
                                 if(data.flag === "true")
                                     $("#myModal_itemExist").modal('show');
-                                if(data.flag === "selfItem")
+                                else if(data.flag === "selfItem")
                                     $("#myModal_selfItem").modal('show');
                                 else
                                     $("#myModal_addSuccess").modal('show');
