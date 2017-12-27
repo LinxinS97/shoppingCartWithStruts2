@@ -48,9 +48,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <td align="center" style="border-top: 0px"><span
                         class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></td>
                 <td style="border-top: 0px"><font size=2><a
-                        href="myCart.jsp">待付款</a></font></td>
+                        href="getCartItem">待付款</a></font></td>
                 <!-- 徽章 -->
-                <td style="border-top: 0px"><span class="badge">0</span></td>
+                <td style="border-top: 0px"><span class="badge"><s:property value="#session.cartSize"/> </span></td>
             </tr>
             <tr>
                 <td align="center" style="border-top: 0px"><span

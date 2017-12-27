@@ -124,7 +124,7 @@
 }
 
 #body-cart .item-info-tag{
-    padding: 20px 0 20px 0;
+    padding: 10px 0 10px 0;
     background-color: #ddedf6;
 }
 
@@ -169,6 +169,14 @@
     height: 55%;
 }
 
+#body-cart .purchase-btn{
+    background-color: #ed5f37;
+}
+
+#body-cart .purchase-btn-disable{
+    background-color:   #566573;
+    cursor:             not-allowed;
+}
 
 
 

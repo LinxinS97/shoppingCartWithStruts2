@@ -8,6 +8,7 @@ $(function () {
         let $sumP = $("#sum-price");
         let sumP = $sumP.html() * 1.00;
         let $checkboxes = $(".item-is-check");
+        let $purchase = $("#purchase");
 
         if($this.hasClass("active")){
             $this.removeClass("active");
@@ -17,6 +18,7 @@ $(function () {
             });
             $sum.html(0);
             $sumP.html("0.00");
+            $purchase.addClass("purchase-btn-disable");
         } else{
             $this.addClass("active");
             sum = 0;
@@ -27,7 +29,8 @@ $(function () {
                 sumP += $(this).parent().parent().find(".sum-tag").html() * 1.00;  //找到所有的价格结点，求和
             });
             $sum.html(sum);
-            $sumP.html(sumP);
+            $sumP.html(Number(sumP).toFixed(2));
+            $purchase.removeClass("purchase-btn-disable");
         }
     });
 
@@ -38,6 +41,7 @@ $(function () {
         let $sumP = $("#sum-price");
         let sumP = $sumP.html() * 1.00;
         let $checkboxes = $(".item-is-check");
+        let $purchase = $("#purchase");
 
         if($this.prop("checked") === true){
             let flag = true;
@@ -50,12 +54,15 @@ $(function () {
             if(flag)
                 $("#select-all").addClass("active");
             $sum.html(++sum);
-            $sumP.html(sumP);
+            $sumP.html(Number(sumP).toFixed(2));
+            $purchase.removeClass("purchase-btn-disable");
         } else{
             sumP -= $this.parent().parent().find(".sum-tag").html() * 1.00;  //找到价格结点，求和
             $("#select-all").removeClass("active");
             $(this).parent().parent().removeClass("checked");
             $sum.html(--sum);
+            if(sum === 0)
+                $purchase.addClass("purchase-btn-disable");
             $sumP.html(Number(sumP).toFixed(2));
         }
     });
@@ -72,7 +79,7 @@ $(function () {
         else if(num > stock)
             $this.val(stock);
 
-        console.log(Number($this.val()).toFixed(2) * price);
+        //console.log(Number($this.val()).toFixed(2) * price);
         $this.parent().next().find(".sum-tag").html(Number(price * $this.val()).toFixed(2));
     });
 
@@ -89,5 +96,19 @@ $(function () {
                     $this.parent().parent().remove();
             }
         })
+    });
+    
+    $("#purchase").click(function () {
+        let $this = $(this);
+        let $sumP = $("#sum-price");
+        let $sumPC = $("#sum-price-conf");
+        let $sum = $("#sum-num");
+        let $sumC = $("#sum-num-conf");
+        if($this.hasClass("purchase-btn-disable"))
+            return false;
+        else{
+            $sumPC.html($sumP.html());
+            $sumC.html($sum.html());
+        }
     })
 });

@@ -10,7 +10,6 @@ public class Order {
     private int userId;
     private Timestamp startTime;
     private Timestamp endTime;
-    private String isPay;
     private String isDelivery;
     private String isGet;
     private String isComment;
@@ -56,16 +55,6 @@ public class Order {
     }
 
     @Basic
-    @Column(name = "isPay", insertable = false)
-    public String getIsPay() {
-        return isPay;
-    }
-
-    public void setIsPay(String isPay) {
-        this.isPay = isPay;
-    }
-
-    @Basic
     @Column(name = "isDelivery", insertable = false)
     public String getIsDelivery() {
         return isDelivery;
@@ -106,7 +95,6 @@ public class Order {
         if (userId != order.userId) return false;
         if (startTime != null ? !startTime.equals(order.startTime) : order.startTime != null) return false;
         if (endTime != null ? !endTime.equals(order.endTime) : order.endTime != null) return false;
-        if (isPay != null ? !isPay.equals(order.isPay) : order.isPay != null) return false;
         if (isDelivery != null ? !isDelivery.equals(order.isDelivery) : order.isDelivery != null) return false;
         if (isGet != null ? !isGet.equals(order.isGet) : order.isGet != null) return false;
         if (isComment != null ? !isComment.equals(order.isComment) : order.isComment != null) return false;
@@ -120,7 +108,6 @@ public class Order {
         result = 31 * result + userId;
         result = 31 * result + (startTime != null ? startTime.hashCode() : 0);
         result = 31 * result + (endTime != null ? endTime.hashCode() : 0);
-        result = 31 * result + (isPay != null ? isPay.hashCode() : 0);
         result = 31 * result + (isDelivery != null ? isDelivery.hashCode() : 0);
         result = 31 * result + (isGet != null ? isGet.hashCode() : 0);
         result = 31 * result + (isComment != null ? isComment.hashCode() : 0);

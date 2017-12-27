@@ -164,11 +164,18 @@ public class Action_json extends ActionSupport implements SessionAware{
 
 
     @Action(value = "operateCart", results = {
-            @Result(type = "json")
+            @Result(type = "json"),
+            @Result(name = "error", type = "json")
     })
     public String OperateCart(){
         User user = (User)session.get("user");
+        Item item = ItemFactory.getItemWithItemId(itemId);
+        if(item.getUserId() == user.getUserId()){
+            flag = "selfItem";
+            return ERROR;
+        }
         flag = CartFactory.IfItemExist(user.getUserId(), itemId) + "";
+
         if(flag.equals("false")){
             Cart cart = new Cart();
             cart.setItemId(itemId);
@@ -206,6 +213,14 @@ public class Action_json extends ActionSupport implements SessionAware{
     }
 
 
+    @Action(value = "purchase", results = {
+            @Result(type = "json")
+    })
+    public String Purchase(){
+        return SUCCESS;
+    }
+
+    //js用来获取显示商品时的标签页
     @Action(value = "getLocation", results = {
             @Result(type = "json")
     })

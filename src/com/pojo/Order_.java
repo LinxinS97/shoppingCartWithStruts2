@@ -10,7 +10,6 @@ public class Order_ {
     public static volatile SingularAttribute<Order, Integer> userId;
     public static volatile SingularAttribute<Order, Timestamp> startTime;
     public static volatile SingularAttribute<Order, Timestamp> endTime;
-    public static volatile SingularAttribute<Order, String> isPay;
     public static volatile SingularAttribute<Order, String> isDelivery;
     public static volatile SingularAttribute<Order, String> isGet;
     public static volatile SingularAttribute<Order, String> isComment;

@@ -102,5 +102,13 @@
             </div>
         </div>
     </div><!-- modal -->
+    <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog"
+         aria-labelledby="mySmallModalLabel" id="myModal_selfItem">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-body">您不能添加您自己的商品！</div>
+            </div>
+        </div>
+    </div><!-- modal -->
 </body>
 </html>

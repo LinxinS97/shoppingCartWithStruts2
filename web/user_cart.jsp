@@ -109,7 +109,7 @@
             <s:if test="#st.index + 1 == maxItem">
                 <div class="row item-info bottom">
                     <div class="col-xs-1">
-                        <input type="checkbox" class="item-is-check"/>
+                        <input type="checkbox" class="item-is-check" itemId="<s:property value="#item.item.itemId"/>"/>
                     </div>
                     <div class="col-xs-5">
                         <div class="media">
@@ -141,7 +141,7 @@
             <s:else>
                 <div class="row item-info">
                     <div class="col-xs-1">
-                        <input type="checkbox" class="item-is-check"/>
+                        <input type="checkbox" class="item-is-check" itemId="<s:property value="#item.item.itemId"/>"/>
                     </div>
                     <div class="col-xs-5">
                         <div class="media">
@@ -166,7 +166,8 @@
                         ￥<span class="h5 sum-tag" style="color: #ed5f37;"><s:property value="#item.item.price"/></span>
                     </div>
                     <div class="col-xs-1">
-                        <span class="help-block delete-btn-page" role="button" itemId="<s:property value="#item.item.itemId"/>">删除</span>
+                        <span class="help-block delete-btn-page" role="button"
+                              itemId="<s:property value="#item.item.itemId"/>">删除</span>
                     </div>
                 </div>
             </s:else>
@@ -195,13 +196,46 @@
                         <span class="h6" style="color: #ed5f37;">￥</span><span class="h4" id="sum-price" style="color: #ed5f37;">0.00</span>
                     </a>
                 </li>
-                <li>
-                    <a role="button" disabled="disabled"><span class="h4">结算</span></a>
+                <li class="purchase-btn">
+                    <a class="purchase-btn-disable"
+                       role="button" id="purchase" data-toggle="modal" data-target="#purchase-modal">
+                        <span class="h4" style="color: #FFFFFF;">
+                            &nbsp;&nbsp;&nbsp;&nbsp;结算&nbsp;&nbsp;&nbsp;&nbsp;
+                        </span>
+                    </a>
                 </li>
             </ul>
         </div><!-- /.navbar-collapse -->
     </div>
 </nav>
+
+<!-- Modal -->
+<div class="modal fade" id="purchase-modal" tabindex="-1" role="dialog" aria-labelledby="conform">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button"
+                        class="close"
+                        data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="conform">确认订单</h4>
+            </div>
+
+            <div class="modal-body">
+                <h5>此次共选择<span id="sum-num-conf" class="h4" style="color: #ed5f37;">0</span>件商品，共付款
+                    <span class="h6" style="color: #ed5f37;">￥</span><span id="sum-price-conf" class="h4" style="color: #ed5f37;">8888</span>
+                </h5>
+                <p>您的收货地址：<span class="h5">广东省&nbsp;&nbsp;广州市&nbsp;&nbsp;海珠区&nbsp;&nbsp;滨江东路蓝色康园华轩1001</span></p>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">再想想</button>
+                <button id="pur-c" type="button" class="btn btn-primary">付款</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script src="js/jquery-3.2.1.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
