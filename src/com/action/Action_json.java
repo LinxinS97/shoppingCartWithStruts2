@@ -1,20 +1,19 @@
 package com.action;
 
-import com.hibernate.AlterFactory;
-import com.hibernate.CartFactory;
-import com.hibernate.ItemFactory;
-import com.hibernate.UserFactory;
+import com.hibernate.*;
 import com.opensymphony.xwork2.ActionSupport;
 import com.pojo.*;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.interceptor.SessionAware;
+import org.hibernate.criterion.Order;
 
 
 import java.io.File;
 import java.math.BigInteger;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -36,6 +35,13 @@ public class Action_json extends ActionSupport implements SessionAware{
 
     //createOrder
     private String itemIdList;
+
+    //alterOrder
+    private String orderId;
+
+    //addComment
+    private int apprise;
+    private String comment;
 
 
 
@@ -74,6 +80,18 @@ public class Action_json extends ActionSupport implements SessionAware{
 
     public void setItemIdList(String itemIdList) {
         this.itemIdList = itemIdList;
+    }
+
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
+    }
+
+    public void setApprise(int apprise) {
+        this.apprise = apprise;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
     @Override
@@ -239,13 +257,15 @@ public class Action_json extends ActionSupport implements SessionAware{
             cart.setUserId(user.getUserId());
             AlterFactory.delete(cart);
 
+            Item item = ItemFactory.getItemWithItemId(Integer.parseInt(itemId));
             Date d = new Date();
-
             o.setOrderId(new BigInteger(d.getTime()+""+user.getUserId()));
-            o.setUserId(user.getUserId());
-            o.setStartTime(timeStamp);
+            //设置买家id，卖家id，商品id
+            o.setBuyerId(user.getUserId());
+            o.setSellerId(item.getUserId());
             o.setItemId(id);
-            o.setDelivery(true);
+
+            o.setStartTime(timeStamp);
             AlterFactory.add(o);
         }
         com.pojo.Result<Item> res = CartFactory.GetUserCart(user.getUserId(), 0, 3);
@@ -254,6 +274,50 @@ public class Action_json extends ActionSupport implements SessionAware{
 
         session.put("navBar_cart", navBar_cart);
         session.put("cartSize", cartSize);
+        return SUCCESS;
+    }
+
+    @Action(value = "alterOrder", results = {
+            @Result(type = "json"),
+            @Result(name="error", type = "json")
+    })
+    public String AlterOrder(){
+        if("delivery".equals(options)){
+            OrderFactory.ChangeItemStatus(new BigInteger(orderId), options);
+        } else if("get".equals(options)){
+            User user = (User) session.get("user");
+            if(!psw.equals(user.getPassword())){
+                flag = "pswError";
+                return ERROR;
+            }
+            OrderFactory.ChangeItemStatus(new BigInteger(orderId), options);
+            flag = "success";
+
+        }
+        return SUCCESS;
+    }
+
+    @Action(value = "addComment", results = {
+            @Result(type = "json")
+    })
+    public String AddComment(){
+        User user = (User) session.get("user");
+        Item item = (Item) ItemFactory.getItemWithItemId(itemId);
+        UserComment userComment = new UserComment();
+
+        System.out.println(apprise + " " + comment);
+        userComment.setUserId(user.getUserId());
+        userComment.setItemId(itemId);
+        userComment.setApprise(apprise);
+        userComment.setComment(comment);
+        userComment.setDate(new java.sql.Date(new Date().getTime()));
+
+        item.setCompleteOrder(item.getCompleteOrder() + 1);
+
+        AlterFactory.add(userComment);
+        AlterFactory.alter(item);
+        OrderFactory.ChangeItemStatus(new BigInteger(orderId), options);
+        flag = "success";
         return SUCCESS;
     }
 

@@ -27,47 +27,48 @@
             <%--商品类型--%>
             <div class="col-xs-2">
                 <div class="list-group">
-                    <a href="getSearchResult?type=服装&location=userOrder" class="list-group-item">
+                    <a href="getSearchResult?type=服装&location=order" class="list-group-item">
                         <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
                         &nbsp;&nbsp;服装
                     </a>
-                    <a href="getSearchResult?type=手机&location=userOrder" class="list-group-item">
+
+                    <a href="getSearchResult?type=手机&location=order" class="list-group-item">
                         <span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
                         &nbsp;&nbsp;手机
                     </a>
-                    <a href="getSearchResult?type=家电&location=userOrder" class="list-group-item">
+                    <a href="getSearchResult?type=家电&location=order" class="list-group-item">
                         <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
                         &nbsp;&nbsp;家电
                     </a>
-                    <a href="getSearchResult?type=数码&location=userOrder" class="list-group-item">
+                    <a href="getSearchResult?type=数码&location=order" class="list-group-item">
                         <span class="glyphicon glyphicon-camera" aria-hidden="true"></span>
                         &nbsp;&nbsp;数码
                     </a>
-                    <a href="getSearchResult?type=游戏&location=userOrder" class="list-group-item">
+                    <a href="getSearchResult?type=游戏&location=order" class="list-group-item">
                         <span class="glyphicon glyphicon-blackboard" aria-hidden="true"></span>
                         &nbsp;&nbsp;游戏
                     </a>
-                    <a href="getSearchResult?type=动漫&location=userOrder" class="list-group-item">
+                    <a href="getSearchResult?type=动漫&location=order" class="list-group-item">
                         <span class="glyphicon glyphicon-music" aria-hidden="true"></span>
                         &nbsp;&nbsp;动漫
                     </a>
-                    <a href="getSearchResult?type=影视&location=userOrder" class="list-group-item">
+                    <a href="getSearchResult?type=影视&location=order" class="list-group-item">
                         <span class="glyphicon glyphicon-film" aria-hidden="true"></span>
                         &nbsp;&nbsp;影视
                     </a>
-                    <a href="getSearchResult?type=美食&location=userOrder" class="list-group-item">
+                    <a href="getSearchResult?type=美食&location=order" class="list-group-item">
                         <span class="glyphicon glyphicon-cutlery" aria-hidden="true"></span>
                         &nbsp;&nbsp;美食
                     </a>
-                    <a href="getSearchResult?type=办公&location=userOrder" class="list-group-item">
+                    <a href="getSearchResult?type=办公&location=order" class="list-group-item">
                         <span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span>
                         &nbsp;&nbsp;办公
                     </a>
-                    <a href="getSearchResult?type=学习&location=userOrder" class="list-group-item">
+                    <a href="getSearchResult?type=学习&location=order" class="list-group-item">
                         <span class="glyphicon glyphicon-education" aria-hidden="true"></span>
                         &nbsp;&nbsp;学习
                     </a>
-                    <a href="getSearchResult?type=卡券&location=userOrder" class="list-group-item">
+                    <a href="getSearchResult?type=卡券&location=order" class="list-group-item">
                         <span class="glyphicon glyphicon-usd" aria-hidden="true"></span>
                         &nbsp;&nbsp;卡券
                     </a>

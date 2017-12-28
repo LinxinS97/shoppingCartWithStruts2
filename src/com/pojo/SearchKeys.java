@@ -11,6 +11,8 @@ public class SearchKeys {
     private String search_type;
     private int[] search_order;
     private int[] search_stock;
+    private String[] search_date;
+    private int status;
 
     public SearchKeys(String search_name, BigDecimal[] search_price,
                       String search_type, int[] search_order, int[] search_stock) {
@@ -20,6 +22,19 @@ public class SearchKeys {
         this.search_order = search_order;
         this.search_stock = search_stock;
     }
+
+    public SearchKeys(int search_userId) {
+        this.search_userId = search_userId;
+    }
+
+    public SearchKeys(String search_name, BigDecimal[] search_price, String search_type, String[] search_date, int status) {
+        this.search_name = search_name;
+        this.search_price = search_price;
+        this.search_type = search_type;
+        this.search_date = search_date;
+        this.status = status;
+    }
+
 
     public SearchKeys(){
 
@@ -81,6 +96,21 @@ public class SearchKeys {
         this.search_itemId = search_itemId;
     }
 
+    public String[] getSearch_date() {
+        return search_date;
+    }
+
+    public void setSearch_date(String[] search_date) {
+        this.search_date = search_date;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
     @Override
     public String toString() {
         return "SearchKeys{" +
@@ -93,4 +123,5 @@ public class SearchKeys {
                 ", search_stock=" + Arrays.toString(search_stock) +
                 '}';
     }
+
 }

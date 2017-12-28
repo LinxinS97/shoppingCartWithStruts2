@@ -24,10 +24,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <img src="${user.getUserImg() }" class="img-circle" style="width:50px;height:50px">
             </li>
             <li>
-                <a aria-hidden="true" href="myInfo.jsp">雷猴啊，${user.getUserName() }</a>
-            </li>
-            <li>
-                <a href="Management?requestType=1">我的商品管理</a>
+                <a href="Management?requestType=1">雷猴啊，${user.getUserName() }</a>
             </li>
             <li>
                 <a href="logout">退出登录</a>

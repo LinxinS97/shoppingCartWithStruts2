@@ -1,6 +1,7 @@
 package com.pojo;
 
 import javax.persistence.*;
+import java.sql.Date;
 
 @Entity
 @IdClass(UserCommentPK.class)
@@ -9,6 +10,7 @@ public class UserComment {
     private int itemId;
     private int apprise;
     private String comment;
+    private Date date;
 
     @Id
     @Column(name = "userId")
@@ -41,7 +43,7 @@ public class UserComment {
     }
 
     @Basic
-    @Column(name = "comment", insertable = false)
+    @Column(name = "comment")
     public String getComment() {
         return comment;
     }
@@ -72,5 +74,15 @@ public class UserComment {
         result = 31 * result + apprise;
         result = 31 * result + (comment != null ? comment.hashCode() : 0);
         return result;
+    }
+
+    @Basic
+    @Column(name = "date")
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 }

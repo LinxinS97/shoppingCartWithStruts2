@@ -14,13 +14,14 @@ import java.util.List;
 public class ItemFactory {
 
 
-//    public static void main(String[] args){
-//        SearchKeys keys = new SearchKeys();
+    public static void main(String[] args){
+//        List<List> list= getItemAndItemCommentWithItemId(4);
 //
-//        for(Item item : itemList){
-//            System.out.println(item.getItemName());
+//        for(List item : list){
+//            System.out.println(item.get(0));
+//            System.out.println(item.get(1));
 //        }
-//    }
+    }
 
     /**
      * 精细搜索(manage.jsp)，综合商品的各种参数进行搜索
@@ -124,8 +125,8 @@ public class ItemFactory {
         String hql = "";
 
         Session s = HibernateFactory.getSession();
-        String hql_order =              "from Item where itemName like ?1 order by completeOrder";
-        String hql_order_type =         "from Item where type=?1 order by completeOrder";
+        String hql_order =              "from Item where itemName like ?1 order by completeOrder desc";
+        String hql_order_type =         "from Item where type=?1 order by completeOrder desc";
         String hql_popular =            "from Item where itemName like ?1";
         String hql_popular_type =       "from Item where type=?1";
         String hql_price =              "from Item where itemName like ?1 order by price";
@@ -223,4 +224,5 @@ public class ItemFactory {
         session.close();
         return items.get(0);
     }
+
 }

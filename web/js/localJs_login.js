@@ -37,12 +37,12 @@ $(document).ready(function(){
 			$("#tel-span").attr("style","display:block");
 			$("#helpBlock1").attr("style","display:block");
 			return flag;
-		}else if($("#psw").val() === "" && !$("#tel-div").hasClass("has-error")){
+		}else if($("#psw").val() === "" && !$("#psw-div").hasClass("has-error")){
 			$("#psw-div").addClass("has-error");
 			$("#psw-span").attr("style","display:block");
 			$("#helpBlock2").attr("style","display:block");
 			return flag;
-		}else if($("#psw-div").hasClass("has-error") || $("#tel-div").hasClass("has-error")){
+		}else if($("#psw-div").hasClass("has-error") || $("#psw-div").hasClass("has-error")){
 			return flag;
 		}else{
 			//alert(""+$("#psw").val());

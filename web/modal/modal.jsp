@@ -33,7 +33,7 @@
                     <div class="row">
                         <div class="col-xs-8 col-xs-offset-2">
                             <div class="form-group has-feedback" id="tel-div">
-                                <label class="control-label">手机号</label>
+                                <label class="control-label" for="tel">手机号</label>
                                 <div class="input-group">
                                     <div class="input-group-addon">
                                         <span class="glyphicon glyphicon-user"></span>
@@ -51,7 +51,7 @@
                     <div class="row">
                         <div class="col-xs-8 col-xs-offset-2">
                             <div class="form-group has-feedback" id="psw-div">
-                                <label for="exampleInputPassword1" class="control-label">密码</label>
+                                <label for="psw" class="control-label">密码</label>
                                 <div class="input-group">
                                     <div class="input-group-addon">
                                         <span class="glyphicon glyphicon-lock"></span>

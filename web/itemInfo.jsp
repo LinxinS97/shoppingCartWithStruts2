@@ -17,6 +17,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/local.css" rel="stylesheet">
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/localJs_main.js"></script>
+    <script src="js/localJs_login.js"></script>
     <title><s:property value="item.itemName"/></title>
 </head>
 <body id="mainInfo-body">
@@ -45,7 +49,7 @@
                             <h3>￥<s:property value="item.price"/></h3>
                         </div>
                         <div class="col-xs-3 title">
-                            成交量&nbsp;0
+                            成交量&nbsp;<s:property value="item.completeOrder"/>
                         </div>
                     </div>
                 </div>
@@ -100,21 +104,31 @@
         </div>
 
         <div class="row" style="background-color: #FFFFFF">
-            <div class="media">
-                <div class="media-left media-top media-box">
-                    <img class="media-object img-thumbnail main-img" src="source/pic/IMG_2189.JPG">
+            <s:if test="commentList.size == 0">
+                <div class="media">
+                    <div class="media-body text-center">
+                        <p class="help-block">暂无用户评论</p>
+                    </div>
                 </div>
-                <div class="media-body">
-                    <h4 class="media-heading" style="margin-bottom: 10px;">用户A</h4>
-                    <p>这是第一条评论hahahahahahah<span class="help-block" style="float: right">2010-10-10</span></p>
-                </div>
-            </div>
+            </s:if>
+            <s:else>
+                <s:iterator value="commentList" status="st" id="item">
+                    <div class="media">
+                        <div class="media-left media-top media-box">
+                            <img class="media-object img-thumbnail main-img" src="<s:property value="#item.user.userImg"/>">
+                        </div>
+                        <div class="media-body">
+                            <h4 class="media-heading" style="margin-bottom: 10px;">
+                                <s:property value="#item.user.userName"/>
+                                <span class="h6 help-block">20<s:property value="#item.comment.date"/>&nbsp;&nbsp;&nbsp;好评</span>
+                            </h4>
+                            <pre><s:property value="#item.comment.comment"/></pre>
+                        </div>
+                    </div>
+                </s:iterator>
+            </s:else>
         </div>
         <jsp:include page="modal/modal.jsp"/>
     </div>
-<script src="js/jquery-3.2.1.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/localJs_main.js"></script>
-<script src="js/localJs_login.js"></script>
 </body>
 </html>

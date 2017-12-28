@@ -25,7 +25,7 @@
             <div class="media-body">
                 <h5 class="media-heading">你好，${user.userName }</h5>
                 <h6>订单数量：${sessionScope.orderCount }</h6>
-                <h6>上架商品数：${maxItem } </h6>
+                <h6>上架商品数：${sessionScope.uploadedItem } </h6>
             </div>
         </div>
     </a>
@@ -33,10 +33,6 @@
     <a href="Management?requestType=1" class="list-group-item">
         <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
         &nbsp;&nbsp;我的商品
-    </a>
-    <a href="Management?requestType=2" class="list-group-item">
-        <span class="glyphicon glyphicon-usd" aria-hidden="true"></span>
-        &nbsp;&nbsp;我卖出的商品
     </a>
     <a href="Management?requestType=3" class="list-group-item">
         <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>

@@ -55,19 +55,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <td align="center" style="border-top: 0px"><span
                         class="glyphicon glyphicon-yen" aria-hidden="true"></span></td>
                 <td style="border-top: 0px"><font size=2>待发货</font></td>
-                <td style="border-top: 0px"><span class="badge">${sessionScope.orderCount } </span></td>
+                <td style="border-top: 0px"><span class="badge">${sessionScope.orderCount.delivery } </span></td>
             </tr>
             <tr>
                 <td align="center" style="border-top: 0px"><span
                         class="glyphicon glyphicon-hourglass" aria-hidden="true"></span></td>
                 <td style="border-top: 0px"><font size=2>待收货</font></td>
-                <td style="border-top: 0px"><span class="badge">0</span></td>
+                <td style="border-top: 0px"><span class="badge">${sessionScope.orderCount.get }</span></td>
             </tr>
             <tr>
                 <td align="center" style="border-top: 0px"><span
                         class="glyphicon glyphicon-comment" aria-hidden="true"></span></td>
                 <td style="border-top: 0px"><font size=2>待评价</font></td>
-                <td style="border-top: 0px"><span class="badge">0</span></td>
+                <td style="border-top: 0px"><span class="badge">${sessionScope.orderCount.comment }</span></td>
             </tr>
 
         </table>

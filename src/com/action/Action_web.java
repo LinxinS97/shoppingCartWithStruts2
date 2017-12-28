@@ -1,9 +1,6 @@
 package com.action;
 
-import com.hibernate.AlterFactory;
-import com.hibernate.CartFactory;
-import com.hibernate.ItemFactory;
-import com.hibernate.OrderFactory;
+import com.hibernate.*;
 import com.opensymphony.xwork2.ActionSupport;
 import com.pojo.*;
 import org.apache.commons.io.FileUtils;
@@ -15,17 +12,15 @@ import org.apache.struts2.interceptor.SessionAware;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-
+import java.util.*;
 
 
 public class Action_web extends ActionSupport implements SessionAware{
 
 
     private Map<String, Object> session;
+
+
     private String requestType;
     private int maxPage;
     private int page;
@@ -34,6 +29,8 @@ public class Action_web extends ActionSupport implements SessionAware{
     private Item item;
     private List<Item> itemList;
     private List<CartItem> cartList;
+    private List<OrderWapper> orderList;
+    private List<CommentWrapper> commentList;
 
     //register params
     private String userName;
@@ -62,10 +59,16 @@ public class Action_web extends ActionSupport implements SessionAware{
     private String search_type;
     private int[] search_order;
     private int[] search_stock;
+    private String search_status;
+    private String[] search_orderTime;
 
     //main.jsp param
     private List<Item> carouselItems;
-    private int        orderCount;
+    private Map<String, Integer> orderCount;
+
+
+    private int orderCount_m;
+    private int uploadedItem;
 
     //user search param
     private String location;
@@ -77,8 +80,32 @@ public class Action_web extends ActionSupport implements SessionAware{
         session = map;
     }
 
-    public int getOrderCount() {
+    public List<CommentWrapper> getCommentList() {
+        return commentList;
+    }
+
+    public void setSearch_status(String search_status) {
+        this.search_status = search_status;
+    }
+
+    public void setSearch_orderTime(String[] search_orderTime) {
+        this.search_orderTime = search_orderTime;
+    }
+
+    public void setUploadedItem(int uploadedItem) {
+        this.uploadedItem = uploadedItem;
+    }
+
+    public Map<String, Integer> getOrderCount() {
         return orderCount;
+    }
+
+    public int getOrderCount_m() {
+        return orderCount_m;
+    }
+
+    public List<OrderWapper> getOrderList() {
+        return orderList;
     }
 
     public List<CartItem> getCartList() {
@@ -209,6 +236,9 @@ public class Action_web extends ActionSupport implements SessionAware{
         this.isTag = isTag;
     }
 
+    public String getRequestType() {
+        return requestType;
+    }
 
 
 
@@ -223,7 +253,11 @@ public class Action_web extends ActionSupport implements SessionAware{
         itemList = ItemFactory.getLatestItem();
         if(session.get("user") != null) {
             User user = (User) session.get("user");
-            orderCount = OrderFactory.getSumofUserOrder(user.getUserId());
+            orderCount = new HashMap<>();
+
+            orderCount.put("delivery", OrderFactory.getSumOfUserOrder(user.getUserId(), 1));
+            orderCount.put("get", OrderFactory.getSumOfUserOrder(user.getUserId(), 2));
+            orderCount.put("comment", OrderFactory.getSumOfUserOrder(user.getUserId(), 3));
             session.put("orderCount", orderCount);
         }
         return SUCCESS;
@@ -238,6 +272,7 @@ public class Action_web extends ActionSupport implements SessionAware{
     //requestType3: get all order information
     //requestType4: changePage
     //requestType5: find items with keys
+    //requestType6: find order with keys
     @Action(value = "Management", results = {
             @Result(location = "/manage/manage.jsp"),
             @Result(name = "error", location = "/login.jsp"),
@@ -248,8 +283,10 @@ public class Action_web extends ActionSupport implements SessionAware{
         if(session.get("user") == null)
             return ERROR;
         User user = (User)session.get("user");
-        orderCount = OrderFactory.getSumofUserOrder(user.getUserId());
-        session.put("orderCount", orderCount);
+        orderCount_m = OrderFactory.getSumOfUserOrder(user.getUserId(), 0);
+        uploadedItem = ItemFactory.MeticulousSearch(new SearchKeys(user.getUserId()),0, 10000).getMaxItem();
+        session.put("orderCount", orderCount_m);
+        session.put("uploadedItem", uploadedItem);
         //每页显示最大商品数
         int max = 6;
 
@@ -277,8 +314,10 @@ public class Action_web extends ActionSupport implements SessionAware{
         //第一个物品的索引
         int firstIndex = page * max - max;
 
+        //我的商品（超链接）
         if("1".equals(requestType)) {
-            session.remove("searchKeys");
+            session.remove("page");
+            session.put("requestType", "1");
             SearchKeys keys = new SearchKeys();
             keys.setSearch_userId(user.getUserId());
             //调用查询方法
@@ -289,11 +328,34 @@ public class Action_web extends ActionSupport implements SessionAware{
             itemList = res.getList();
             maxItem = res.getMaxItem();
             session.put("maxItem", maxItem);
-            session.put("requestType", "1");
-            session.put("page", page);
+            session.put("page", 1);
             System.out.println("maxPage = " + maxPage);
 
-        } else if("5".equals(requestType)){
+        }
+        //订单管理（超链接）
+        else if("3".equals(requestType)){
+            session.remove("page");
+            session.remove("searchKeys");
+            session.put("requestType", "3");
+            orderList = new ArrayList<>();
+
+            SearchKeys keys = new SearchKeys();
+            keys.setSearch_userId(user.getUserId());
+            com.pojo.Result<List> res = OrderFactory.getOrderWapper(keys, firstIndex, max);
+            for(List i : res.getList()){
+                orderList.add(new OrderWapper((Item)i.get(0), (UserOrder)i.get(1)));
+            }
+
+            maxPage = res.getMaxPage();
+            maxItem = res.getMaxItem();
+            session.put("maxItem", maxItem);
+            session.put("page", 1);
+            System.out.println("maxPage = " + maxPage);
+
+        }
+        //我的商品（查询）
+        else if("5".equals(requestType)){
+            session.put("requestType", "5");
             SearchKeys keys = null;
             if(session.get("searchKeys") != null)
                 keys = (SearchKeys)session.get("searchKeys");
@@ -323,7 +385,44 @@ public class Action_web extends ActionSupport implements SessionAware{
             itemList = res.getList();
             maxItem = res.getMaxItem();
             session.put("maxItem", maxItem);
-            session.put("requestType", "5");
+            session.put("page", page);
+            System.out.println("maxPage = " + maxPage);
+        }
+        //订单查询
+        else if("7".equals(requestType)){
+            session.put("requestType", "7");
+            SearchKeys keys = null;
+            if(session.get("searchKeys") != null)
+                keys = (SearchKeys)session.get("searchKeys");
+
+            if(isSearch.equals("1")){
+                if(search_price[0].equals(search_price[1]) && search_price[0].equals(new BigDecimal(0)))
+                    search_price = null;
+
+                if("全部".equals(search_type))
+                    search_type = null;
+
+                if(search_orderTime[0].equals(search_orderTime[1]) && search_orderTime[0].equals(""))
+                    search_orderTime = null;
+
+
+
+                keys = new SearchKeys(search_name, search_price,
+                        search_type, search_orderTime, Integer.parseInt(search_status));
+                keys.setSearch_userId(user.getUserId());
+                session.put("searchKeys", keys);
+            }
+
+            com.pojo.Result<List> res = OrderFactory.getOrderWapper(
+                    keys, firstIndex, max
+            );
+            orderList = new ArrayList<>();
+            for(List i : res.getList()){
+                orderList.add(new OrderWapper((Item)i.get(0), (UserOrder)i.get(1)));
+            }
+            maxPage = res.getMaxPage();
+            maxItem = res.getMaxItem();
+            session.put("maxItem", maxItem);
             session.put("page", page);
             System.out.println("maxPage = " + maxPage);
         }
@@ -414,6 +513,11 @@ public class Action_web extends ActionSupport implements SessionAware{
     })
     public String GetItemInfo(){
         item = ItemFactory.getItemWithItemId(itemId);
+        List<List> list = CommentFactory.getItemComment(itemId);
+        commentList = new ArrayList<>();
+        for(List i : list)
+            commentList.add(new CommentWrapper((User)i.get(0), (UserComment)i.get(1)));
+
         if(requestType.equals("1")) {
             if(session.get("user") == null)
                 return ERROR;
