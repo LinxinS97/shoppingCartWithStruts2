@@ -122,7 +122,7 @@
                                 <s:property value="#item.user.userName"/>
                                 <span class="h6 help-block">20<s:property value="#item.comment.date"/>&nbsp;&nbsp;&nbsp;好评</span>
                             </h4>
-                            <pre><s:property value="#item.comment.comment"/></pre>
+                            <pre class="info-pre"><s:property value="#item.comment.comment"/></pre>
                         </div>
                     </div>
                 </s:iterator>

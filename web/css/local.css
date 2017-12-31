@@ -254,7 +254,12 @@
     padding: 8px 0 0 0;
 }
 
-
+#mainInfo-container .info-pre{
+    padding:    0;
+    margin:     0;
+    background-color: #FFFFFF;
+    border:     0;
+}
 
 
 

@@ -105,8 +105,9 @@
                         <div class="item">
                             <div style="width: 682px; height: 440px; text-align: center;
                                 display: table-cell;vertical-align: middle;">
-                                <img href="GetItemInfo?itemId=<s:property value="#item.itemId"/>"
-                                     class="carousel-image" src="<s:property value="#item.itemImg"/>">
+                                <a href="getItemInfo?requestType=2&itemId=<s:property value="#item.itemId"/> ">
+                                    <img class="carousel-image" src="<s:property value="#item.itemImg"/>">
+                                </a>
                             </div>
                             <div class="carousel-caption">
                                 <h3><s:property value="#item.itemName"/> </h3>
