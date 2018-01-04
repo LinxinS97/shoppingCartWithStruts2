@@ -66,6 +66,7 @@ public class OrderFactory {
         return sum;
     }
 
+
     public static Result<List> getOrderWapper(SearchKeys keys, int first, int max){
         Session s = HibernateFactory.getSession();
         String hql = "select new List(i, o) " +
